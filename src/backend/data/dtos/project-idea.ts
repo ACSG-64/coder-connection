@@ -9,30 +9,31 @@ export class ProjectIdea {
     }
 
     public get name(): string {
-        return this._name.trim();
+        return this._name.trim()
     }
 
     public get summary(): string {
-        return this._summary.trim();
+        return this._summary.trim()
     }
 
     public get description(): string {
-        return this._description.replace('#', '').trim();
+        return this._description.replace('#', '').trim()
     }
 
     public get readme(): string {
         const breakLine = '\n \n'
-        const readme = `# ${this.name}`
-            + breakLine
-            + `_${this.summary}_`
-            + breakLine
-            + '# The idea'
-            + breakLine
-            + this.description
-            + breakLine
-            + '___'
-            + breakLine
-            + '_Created from CoderConnection website_'
+        const readme =
+            `# ${this.name}` +
+            breakLine +
+            `_${this.summary}_` +
+            breakLine +
+            '# The idea' +
+            breakLine +
+            this.description +
+            breakLine +
+            '___' +
+            breakLine +
+            '_Created from CoderConnection website_'
         return readme
     }
 
@@ -41,6 +42,6 @@ export class ProjectIdea {
     }
 
     public get tags(): [string] | [] {
-        return this._tags;
+        return this._tags
     }
 }

@@ -1,6 +1,6 @@
-import { Column, ForeignKey, Model, Table } from "sequelize-typescript";
-import { Topic } from "../topic";
-import { ProjectIdea } from ".";
+import { Column, ForeignKey, Model, Table } from 'sequelize-typescript'
+import { Topic } from '../topic'
+import { ProjectIdea } from '.'
 
 @Table
 export class TopicProject extends Model {

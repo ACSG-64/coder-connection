@@ -1,7 +1,16 @@
-import { BelongsTo, BelongsToMany, Column, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
-import { ProjectIdea, Skill, User } from "..";
-import { GroupMatchingSkill } from "./group-matching-skill";
-import { GroupMatchingProjectIdea } from "./group-matching-project-idea";
+import {
+    BelongsTo,
+    BelongsToMany,
+    Column,
+    ForeignKey,
+    Model,
+    PrimaryKey,
+    Table,
+    UpdatedAt
+} from 'sequelize-typescript'
+import { ProjectIdea, Skill, User } from '..'
+import { GroupMatchingSkill } from './group-matching-skill'
+import { GroupMatchingProjectIdea } from './group-matching-project-idea'
 
 @Table
 export class GroupMatchingApplication extends Model {

@@ -1,4 +1,4 @@
-import "reflect-metadata";
+import 'reflect-metadata'
 
 const TYPES = {
     CreateProjectIdeaUseCase: Symbol('CreateProjectIdeaUseCase'),

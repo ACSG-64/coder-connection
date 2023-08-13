@@ -1,5 +1,14 @@
-import { BelongsTo, Column, Default, ForeignKey, Model, PrimaryKey, Table, Unique } from "sequelize-typescript";
-import { WorkingGroup } from "..";
+import {
+    BelongsTo,
+    Column,
+    Default,
+    ForeignKey,
+    Model,
+    PrimaryKey,
+    Table,
+    Unique
+} from 'sequelize-typescript'
+import { WorkingGroup } from '..'
 
 @Table
 export class Invitation extends Model {
@@ -7,7 +16,7 @@ export class Invitation extends Model {
     @ForeignKey(() => WorkingGroup)
     @Column
     workingGroupId!: number
-    
+
     @Unique
     @Column
     invitationCode!: string

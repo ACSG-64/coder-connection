@@ -1,6 +1,15 @@
-import { BelongsTo, Column, Default, ForeignKey, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
-import { WorkingGroup } from ".";
-import { User } from "..";
+import {
+    BelongsTo,
+    Column,
+    Default,
+    ForeignKey,
+    HasMany,
+    Model,
+    PrimaryKey,
+    Table
+} from 'sequelize-typescript'
+import { WorkingGroup } from '.'
+import { User } from '..'
 
 @Table
 export class Membership extends Model {
@@ -30,7 +39,6 @@ export class Membership extends Model {
     @Column
     canFindTalent!: boolean
 
-    
     @BelongsTo(() => User)
     member!: User
 

@@ -1,6 +1,12 @@
-import { BelongsToMany, Column, Model, PrimaryKey, Table } from "sequelize-typescript";
-import { ProjectIdea } from "./project-idea";
-import { TopicProject } from "./project-idea/topic-project";
+import {
+    BelongsToMany,
+    Column,
+    Model,
+    PrimaryKey,
+    Table
+} from 'sequelize-typescript'
+import { ProjectIdea } from './project-idea'
+import { TopicProject } from './project-idea/topic-project'
 
 @Table
 export class Topic extends Model<Topic> {
@@ -14,4 +20,3 @@ export class Topic extends Model<Topic> {
     @BelongsToMany(() => ProjectIdea, () => TopicProject)
     projectIdeas?: ProjectIdea[]
 }
-

@@ -1,5 +1,19 @@
-import { BelongsToMany, Column, DataType, Model, PrimaryKey, Table, Unique } from "sequelize-typescript";
-import { TalentPost, TalentPostSkill, User, UserCompetency, UserInterest } from ".";
+import {
+    BelongsToMany,
+    Column,
+    DataType,
+    Model,
+    PrimaryKey,
+    Table,
+    Unique
+} from 'sequelize-typescript'
+import {
+    TalentPost,
+    TalentPostSkill,
+    User,
+    UserCompetency,
+    UserInterest
+} from '.'
 
 @Table
 export class Skill extends Model {

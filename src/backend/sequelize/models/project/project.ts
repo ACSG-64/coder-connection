@@ -1,12 +1,26 @@
-import { BelongsTo, BelongsToMany, Column, CreatedAt, DataType, Default, ForeignKey, HasMany, Model, PrimaryKey, Table, Unique, UpdatedAt } from "sequelize-typescript";
-import { ProjectIdea, User, UserProject, WorkingGroup } from "..";
+import {
+    BelongsTo,
+    BelongsToMany,
+    Column,
+    CreatedAt,
+    DataType,
+    Default,
+    ForeignKey,
+    HasMany,
+    Model,
+    PrimaryKey,
+    Table,
+    Unique,
+    UpdatedAt
+} from 'sequelize-typescript'
+import { ProjectIdea, User, UserProject, WorkingGroup } from '..'
 
 @Table
 export class Project extends Model {
     @PrimaryKey
     @Column
-    id!: number  
-    
+    id!: number
+
     @Column(DataType.STRING(100))
     name!: string
 
@@ -16,7 +30,7 @@ export class Project extends Model {
     @Unique
     @Column(DataType.STRING(30))
     video?: string
-    
+
     @Unique
     @Column
     repoUrl!: string
@@ -45,7 +59,7 @@ export class Project extends Model {
     @ForeignKey(() => WorkingGroup)
     @Column
     workingGroupId!: number
-    
+
     /* Project idea - project association */
     @BelongsTo(() => ProjectIdea)
     projectIdea!: ProjectIdea
@@ -61,7 +75,7 @@ export class Project extends Model {
     @ForeignKey(() => Project)
     @Column
     baseProjectId?: number
-    
+
     @Column
     postedAt?: Date
 

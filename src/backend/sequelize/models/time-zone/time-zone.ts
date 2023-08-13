@@ -1,6 +1,15 @@
-import { BelongsTo, Column, ForeignKey, HasMany, Model, PrimaryKey, Table, Unique } from "sequelize-typescript";
-import { Country } from ".";
-import { User } from "..";
+import {
+    BelongsTo,
+    Column,
+    ForeignKey,
+    HasMany,
+    Model,
+    PrimaryKey,
+    Table,
+    Unique
+} from 'sequelize-typescript'
+import { Country } from '.'
+import { User } from '..'
 
 @Table
 export class TimeZone extends Model {

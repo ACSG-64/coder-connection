@@ -1,9 +1,30 @@
-import { BelongsTo, BelongsToMany, Column, CreatedAt, DataType, ForeignKey, HasMany, Model, PrimaryKey, Table, Unique } from "sequelize-typescript";
-import { Application, Project, Skill, TimeZone, UserCompetency, UserInterest, UserProject, WorkingGroup } from "..";
-import { Membership } from "../working-group/membership";
+import {
+    BelongsTo,
+    BelongsToMany,
+    Column,
+    CreatedAt,
+    DataType,
+    ForeignKey,
+    HasMany,
+    Model,
+    PrimaryKey,
+    Table,
+    Unique
+} from 'sequelize-typescript'
+import {
+    Application,
+    Project,
+    Skill,
+    TimeZone,
+    UserCompetency,
+    UserInterest,
+    UserProject,
+    WorkingGroup
+} from '..'
+import { Membership } from '../working-group/membership'
 
 @Table
-export class User extends Model {    
+export class User extends Model {
     @PrimaryKey
     @Column(DataType.UUIDV4)
     id!: string
@@ -16,7 +37,7 @@ export class User extends Model {
 
     @Column(DataType.STRING(35))
     username!: string
-    
+
     @Column(DataType.STRING(500))
     description?: string
 
@@ -36,7 +57,7 @@ export class User extends Model {
     slackId!: string
 
     @BelongsTo(() => TimeZone)
-    timeZone!:  TimeZone
+    timeZone!: TimeZone
     @ForeignKey(() => TimeZone)
     @Column
     timeZoneId!: string
@@ -55,11 +76,10 @@ export class User extends Model {
 
     @BelongsToMany(() => WorkingGroup, () => Membership)
     workingGroups?: WorkingGroup[]
-    
+
     @Column
     lastSeenAt!: Date
 
     @CreatedAt
     createdAt!: Date
-
 }

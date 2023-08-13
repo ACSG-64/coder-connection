@@ -1,5 +1,13 @@
-import { BelongsTo, Column, ForeignKey, Model, PrimaryKey, Table, Unique } from "sequelize-typescript";
-import { OnboardingUser } from "./onboarding-user";
+import {
+    BelongsTo,
+    Column,
+    ForeignKey,
+    Model,
+    PrimaryKey,
+    Table,
+    Unique
+} from 'sequelize-typescript'
+import { OnboardingUser } from './onboarding-user'
 
 @Table
 export class SlackVerificationCode extends Model {

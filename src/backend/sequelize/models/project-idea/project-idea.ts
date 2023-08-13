@@ -1,5 +1,15 @@
-import { BelongsToMany, Column, CreatedAt,  HasMany,  Model, PrimaryKey, Table, Unique, UpdatedAt } from "sequelize-typescript";
-import { Project, Topic, TopicProject } from "..";
+import {
+    BelongsToMany,
+    Column,
+    CreatedAt,
+    HasMany,
+    Model,
+    PrimaryKey,
+    Table,
+    Unique,
+    UpdatedAt
+} from 'sequelize-typescript'
+import { Project, Topic, TopicProject } from '..'
 
 @Table
 export class ProjectIdea extends Model {
@@ -9,11 +19,11 @@ export class ProjectIdea extends Model {
 
     @Unique
     @Column
-    nodeId!: string;
-    
+    nodeId!: string
+
     @Column
     name!: string
-    
+
     @Column
     summary?: string
 

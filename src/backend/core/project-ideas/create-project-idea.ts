@@ -1,9 +1,5 @@
 import TYPES from '@/backend/config/types'
-import {
-    IProjectIdeasRepository,
-    IUsersRepository,
-    userId
-} from '@/backend/data/repositories/interfaces'
+import * as interfaces from '@/backend/data/repositories/interfaces'
 import { inject, injectable } from 'inversify'
 import { CreateProjectIdeaUseCase } from './interfaces'
 import { ProjectIdea } from '@/backend/data/dtos/project-idea'
@@ -12,14 +8,14 @@ import { ProjectIdea } from '@/backend/data/dtos/project-idea'
 export class CreateProjectIdeaService implements CreateProjectIdeaUseCase {
     constructor(
         @inject(TYPES.IProjectIdeasRepository)
-        private readonly projectIdeaRepository: IProjectIdeasRepository,
+        private readonly projectIdeaRepository: interfaces.IProjectIdeasRepository,
         @inject(TYPES.IUserRepository)
-        private readonly userRepository: IUsersRepository
+        private readonly userRepository: interfaces.IUsersRepository
     ) {}
 
     async createProjectIdea(
         projectIdea: ProjectIdea,
-        authorId: userId
+        authorId: interfaces.userId
     ): Promise<string> {
         // Create the project idea's repository
         const repo = await this.projectIdeaRepository.create(projectIdea)

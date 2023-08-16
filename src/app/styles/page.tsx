@@ -386,7 +386,7 @@ export default function Home() {
                         <SheetTitle>Edit profile</SheetTitle>
                         <SheetDescription>
                             Make changes to your profile here. Click save when
-                            you're done.
+                            you&#39;re done.
                         </SheetDescription>
                     </SheetHeader>
                     <div className="grid gap-4 py-4">
@@ -462,7 +462,7 @@ export default function Home() {
                             <CardTitle>Account</CardTitle>
                             <CardDescription>
                                 Make changes to your account here. Click save
-                                when you're done.
+                                when you&#39;re done.
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-2">
@@ -485,8 +485,8 @@ export default function Home() {
                         <CardHeader>
                             <CardTitle>Password</CardTitle>
                             <CardDescription>
-                                Change your password here. After saving, you'll
-                                be logged out.
+                                Change your password here. After saving,
+                                you&#39;ll` be logged out.
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-2">

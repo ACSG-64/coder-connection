@@ -129,7 +129,7 @@ export default function Home() {
     return (
         <main className="space-y-8 px-10">
             {/* Typography */}
-            <H3 className="text-slate-500 mt-20"> Typography Overview: </H3>
+            <H3 className="mt-20 text-slate-500"> Typography Overview: </H3>
             <H1>Heading 1 Example</H1>
             <H2>Heading 2 Example</H2>
             <H3>Heading 3 Example</H3>
@@ -152,7 +152,7 @@ export default function Home() {
             </Paragraph>
 
             {/* Buttons */}
-            <H3 className="text-slate-500 mt-20"> Buttons Overview: </H3>
+            <H3 className="mt-20 text-slate-500"> Buttons Overview: </H3>
             <div className="space-x-10">
                 <Button variant="primary">Primary </Button>
                 <Button variant="secondary">Secondary </Button>
@@ -163,7 +163,7 @@ export default function Home() {
             </div>
 
             {/* Alert Dialog */}
-            <H3 className="text-slate-500 mt-20"> Alert Dialog: </H3>
+            <H3 className="mt-20 text-slate-500"> Alert Dialog: </H3>
             <AlertDialog>
                 <AlertDialogTrigger asChild>
                     <Button variant="outline">Open Alert</Button>
@@ -187,14 +187,14 @@ export default function Home() {
             </AlertDialog>
 
             {/* Alert Dialog */}
-            <H3 className="text-slate-500 mt-20"> Avatars: </H3>
+            <H3 className="mt-20 text-slate-500"> Avatars: </H3>
             <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>Avatar Name</AvatarFallback>
             </Avatar>
 
             {/* Card */}
-            <H3 className="text-slate-500 mt-20"> Card: </H3>
+            <H3 className="mt-20 text-slate-500"> Card: </H3>
             <Card className="w-[350px]">
                 <CardHeader>
                     <CardTitle>Create project</CardTitle>
@@ -244,7 +244,7 @@ export default function Home() {
             </Card>
 
             {/* Checkbox */}
-            <H3 className="text-slate-500 mt-20"> Checkbox: </H3>
+            <H3 className="mt-20 text-slate-500"> Checkbox: </H3>
             <div className="flex items-center space-x-2">
                 <Checkbox id="terms" />
                 <label
@@ -256,7 +256,7 @@ export default function Home() {
             </div>
 
             {/* Command */}
-            <H3 className="text-slate-500 mt-20"> Command/Search: </H3>
+            <H3 className="mt-20 text-slate-500"> Command/Search: </H3>
             <Command>
                 <CommandInput placeholder="Type a command or search..." />
                 <CommandList>
@@ -276,7 +276,7 @@ export default function Home() {
             </Command>
 
             {/* Dialog */}
-            <H3 className="text-slate-500 mt-20"> Dialog: </H3>
+            <H3 className="mt-20 text-slate-500"> Dialog: </H3>
             <Dialog>
                 <DialogTrigger>Open</DialogTrigger>
                 <DialogContent>
@@ -292,11 +292,11 @@ export default function Home() {
             </Dialog>
 
             {/* Input */}
-            <H3 className="text-slate-500 mt-20"> Input: </H3>
+            <H3 className="mt-20 text-slate-500"> Input: </H3>
             <Input type="email" placeholder="Email" />
 
             {/* Menu */}
-            <H3 className="text-slate-500 mt-20"> Menu: </H3>
+            <H3 className="mt-20 text-slate-500"> Menu: </H3>
             <Menubar>
                 <MenubarMenu>
                     <MenubarTrigger>File</MenubarTrigger>
@@ -328,7 +328,7 @@ export default function Home() {
             </Menubar>
 
             {/* Navigation */}
-            <H3 className="text-slate-500 mt-20"> Navigation: </H3>
+            <H3 className="mt-20 text-slate-500"> Navigation: </H3>
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>
@@ -341,7 +341,7 @@ export default function Home() {
             </NavigationMenu>
 
             {/* Radio group */}
-            <H3 className="text-slate-500 mt-20"> Radio-group: </H3>
+            <H3 className="mt-20 text-slate-500"> Radio-group: </H3>
             <RadioGroup defaultValue="comfortable">
                 <div className="flex items-center space-x-2">
                     <RadioGroupItem value="default" id="r1" />
@@ -358,7 +358,7 @@ export default function Home() {
             </RadioGroup>
 
             {/* Select */}
-            <H3 className="text-slate-500 mt-20"> Select: </H3>
+            <H3 className="mt-20 text-slate-500"> Select: </H3>
 
             <Select>
                 <SelectTrigger className="w-[180px]">
@@ -372,11 +372,11 @@ export default function Home() {
             </Select>
 
             {/* Separator */}
-            <H3 className="text-slate-500 mt-20"> Separator: </H3>
+            <H3 className="mt-20 text-slate-500"> Separator: </H3>
             <Separator />
 
             {/* Sheet */}
-            <H3 className="text-slate-500 mt-20"> Sheet: </H3>
+            <H3 className="mt-20 text-slate-500"> Sheet: </H3>
             <Sheet>
                 <SheetTrigger asChild>
                     <Button variant="outline">Open</Button>
@@ -420,7 +420,7 @@ export default function Home() {
             </Sheet>
 
             {/* Switch */}
-            <H3 className="text-slate-500 mt-20"> Switch: </H3>
+            <H3 className="mt-20 text-slate-500"> Switch: </H3>
 
             <div className="flex items-center space-x-2">
                 <Switch id="airplane-mode" />
@@ -428,7 +428,7 @@ export default function Home() {
             </div>
 
             {/* Table */}
-            <H3 className="text-slate-500 mt-20"> Table: </H3>
+            <H3 className="mt-20 text-slate-500"> Table: </H3>
             <Table>
                 <TableCaption>A list of your recent invoices.</TableCaption>
                 <TableHeader>
@@ -450,7 +450,7 @@ export default function Home() {
             </Table>
 
             {/* Tabs */}
-            <H3 className="text-slate-500 mt-20"> Tabs: </H3>
+            <H3 className="mt-20 text-slate-500"> Tabs: </H3>
             <Tabs defaultValue="account" className="w-[400px]">
                 <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="account">Account</TabsTrigger>
@@ -509,11 +509,11 @@ export default function Home() {
             </Tabs>
 
             {/* Text Area */}
-            <H3 className="text-slate-500 mt-20"> Text Area: </H3>
+            <H3 className="mt-20 text-slate-500"> Text Area: </H3>
             <Textarea placeholder="Type your message here." />
 
             {/* Tooltip */}
-            <H3 className="text-slate-500 mt-20"> Tooltip: </H3>
+            <H3 className="mt-20 text-slate-500"> Tooltip: </H3>
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger asChild>
@@ -526,7 +526,7 @@ export default function Home() {
             </TooltipProvider>
 
             {/* Toast */}
-            <H3 className="text-slate-500 mt-20"> Toast: </H3>
+            <H3 className="mt-20 text-slate-500"> Toast: </H3>
             <ToastDemo />
         </main>
     )

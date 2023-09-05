@@ -135,7 +135,7 @@ export const Large = ({
     ...rest
 }: React.HTMLProps<HTMLDivElement>) => {
     return (
-        <div className={cn('text-lg font-normal', className)} {...rest}>
+        <div className={cn('text-lg font-semibold', className)} {...rest}>
             {children}
         </div>
     )

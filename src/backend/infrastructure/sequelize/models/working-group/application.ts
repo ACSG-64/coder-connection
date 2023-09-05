@@ -18,7 +18,7 @@ export class Application extends Model {
     @PrimaryKey
     @ForeignKey(() => TalentPost)
     @Column
-    talentPostId!: string
+    talentPostId!: number
 
     @BelongsTo(() => User)
     applicant!: User

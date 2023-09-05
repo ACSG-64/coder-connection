@@ -12,10 +12,6 @@ import {
 import { Project, Topic, TopicProject } from '..'
 @Table
 export class ProjectIdea extends Model {
-    @PrimaryKey
-    @Column
-    id!: number
-
     @Unique
     @Column
     nodeId!: string

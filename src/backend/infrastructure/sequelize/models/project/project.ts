@@ -17,10 +17,6 @@ import { ProjectIdea, User, UserProject, WorkingGroup } from '..'
 
 @Table
 export class Project extends Model {
-    @PrimaryKey
-    @Column
-    id!: number
-
     @Column(DataType.STRING(100))
     name!: string
 

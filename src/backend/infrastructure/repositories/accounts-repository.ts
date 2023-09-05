@@ -1,13 +1,13 @@
 import 'reflect-metadata'
 import orm from '@/backend/infrastructure/connectors/database/sequelize'
+import { IAccountsRepository } from '@/backend/core/shared/repositories/i-accounts-repository'
+import { injectable } from 'inversify'
+import { VerificationCode } from '@/backend/core/services/register-user/models/verification-code'
 import {
     OnboardingUser,
     SlackVerificationCode,
     User
-} from '@/backend/configuration/sequelize/models'
-import { IAccountsRepository } from '@/backend/core/shared/repositories/i-accounts-repository'
-import { injectable } from 'inversify'
-import { VerificationCode } from '@/backend/core/services/register-user/models/verification-code'
+} from '../sequelize/models'
 
 @injectable()
 export class AccountsRepository implements IAccountsRepository {

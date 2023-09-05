@@ -10,9 +10,6 @@ import { OnboardingUser } from './onboarding-user'
 
 @Table
 export class SlackVerificationCode extends Model {
-    @Column({ primaryKey: true })
-    id!: number
-
     @ForeignKey(() => OnboardingUser)
     onboardingUserId!: string
 

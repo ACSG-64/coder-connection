@@ -15,10 +15,6 @@ import { Membership } from './membership'
 
 @Table
 export class WorkingGroup extends Model {
-    @PrimaryKey
-    @Column
-    id!: number
-
     @Unique
     @Column(DataType.STRING(32))
     name!: string

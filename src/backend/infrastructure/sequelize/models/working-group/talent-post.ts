@@ -14,10 +14,6 @@ import { Application, Skill, TalentPostSkill, WorkingGroup } from '..'
 
 @Table
 export class TalentPost extends Model {
-    @PrimaryKey
-    @Column
-    id!: number
-
     @Column(DataType.STRING(300))
     description!: string
 

@@ -67,7 +67,7 @@ export class User extends Model {
     timeZone!: TimeZone
     @ForeignKey(() => TimeZone)
     @Column
-    timeZoneId!: string
+    timeZoneId!: number
 
     @BelongsToMany(() => Skill, () => UserCompetency)
     competencies?: Project[]

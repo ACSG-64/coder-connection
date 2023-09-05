@@ -6,7 +6,7 @@ import {
     Table,
     Unique
 } from 'sequelize-typescript'
-import { OnboardingUser } from '.'
+import { OnboardingUser } from './onboarding-user'
 
 @Table
 export class SlackVerificationCode extends Model {
@@ -24,5 +24,5 @@ export class SlackVerificationCode extends Model {
     expiresAt!: Date
 
     @BelongsTo(() => OnboardingUser, { onDelete: 'CASCADE' })
-    onboardingUser!: OnboardingUser
+    onboardingUser!: any
 }

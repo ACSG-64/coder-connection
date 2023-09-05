@@ -8,7 +8,7 @@ import {
     Table,
     Unique
 } from 'sequelize-typescript'
-import { SlackVerificationCode } from '.'
+import { SlackVerificationCode } from './slack-verification-code'
 
 @Table
 export class OnboardingUser extends Model {

@@ -1,2 +1,1 @@
-export * from './onboarding-user'
-export * from './user'
+export * from '@/backend/infrastructure/sequelize/models'

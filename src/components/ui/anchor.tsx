@@ -1,0 +1,66 @@
+import * as React from 'react'
+import { Slot } from '@radix-ui/react-slot'
+import { cva, type VariantProps } from 'class-variance-authority'
+
+import { cn } from '@/lib/utils'
+import Link from 'next/link'
+
+const buttonVariants = cva(
+    'inline-flex items-center justify-center rounded-md text-lg font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+    {
+        variants: {
+            variant: {
+                primary:
+                    'bg-primary text-sm text-primary-foreground hover:bg-primary/90',
+                destructive:
+                    'bg-destructive text-sm  text-destructive-foreground hover:bg-destructive/90',
+                outline:
+                    'border  text-sm border-input bg-background hover:bg-accent hover:text-accent-foreground',
+                secondary:
+                    'bg-secondary text-sm text-secondary-foreground hover:bg-secondary/80',
+                ghost: 'hover:bg-accent text-sm  hover:text-accent-foreground',
+                link: 'text-primary  text-sm underline-offset-4 hover:underline'
+            },
+            size: {
+                default: 'h-10 px-4 py-2',
+                sm: 'h-9 rounded-md px-3',
+                lg: 'h-11 rounded-md px-8',
+                icon: 'h-10 w-10'
+            }
+        },
+        defaultVariants: {
+            variant: 'primary',
+            size: 'default'
+        }
+    }
+)
+
+interface AnchorProps
+    extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
+        VariantProps<typeof buttonVariants> {}
+
+const Anchor = React.forwardRef<HTMLAnchorElement, AnchorProps>(
+    ({ className, variant, size, href = '#', ...props }, ref) => {
+        return (
+            <Link
+                className={cn(buttonVariants({ variant, size, className }))}
+                href={href}
+                ref={ref}
+                {...props}
+            ></Link>
+        )
+    }
+)
+Anchor.displayName = 'Anchor'
+
+export { Anchor, buttonVariants }
+
+/*
+
+                    <Link
+                        href={'https://google.com'}
+                        className="font-medium text-primary underline-offset-4 hover:underline"
+                    >
+                        Test link
+                    </Link>
+*/

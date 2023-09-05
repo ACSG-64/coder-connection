@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Button } from '@/components/ui/button'
+import { AnchorButton, AnchorButtonProps } from '@/components/ui/button'
 import { FaGithub } from 'react-icons/fa6'
 
-const meta: Meta<typeof Button> = {
-    component: Button,
+const meta: Meta<AnchorButtonProps> = {
+    component: AnchorButton,
     tags: ['autodocs']
 }
 
 export default meta
 
-type Story = StoryObj<typeof Button>
+type Story = StoryObj<AnchorButtonProps>
 
 export const Primary: Story = {
     args: {
@@ -18,17 +18,10 @@ export const Primary: Story = {
     }
 }
 
-export const Secondary: Story = {
-    args: {
-        variant: 'secondary',
-        children: 'Secondary button'
-    }
-}
-
 export const WithIcon: Story = {
     args: {
         variant: 'outline',
-        children: 'Button with icon',
+        children: 'Anchor button with icon',
         icon: FaGithub
     }
 }

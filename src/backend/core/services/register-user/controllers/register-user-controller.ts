@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid/async'
 import { CreateNewMemberCommand } from '../models/create-new-member-command'
 import { GenerateCodeCommand } from '../models/generate-code-command'
 import { inject, injectable } from 'inversify'
-import TYPES from '@/backend/configuration/TYPES'
+import TYPES from '@/backend/configuration/di-types/register-user/TYPES'
 import type { IAccountsRepository } from '@/backend/core/shared/repositories/i-accounts-repository'
 import {
     RegisterUserUseCase,
@@ -21,21 +21,23 @@ export class RegisterUserController
     ) {}
 
     async register(newMember: CreateNewMemberCommand) {
-        const { userId, name, surname, slackId, providedCode } = newMember
+        const { userId, name, surname, timeZone, slackId, verificationCode } =
+            newMember
 
         const vCode = await this.accountsRepo.getVerificationCode(userId)
         if (!vCode || vCode.code == 'INVALID') {
             throw new CustomError(400, "The code hasn't been generated yet")
         }
 
-        if (providedCode != vCode.code) {
-            throw new CustomError(400, 'Invalid code')
+        if (verificationCode != vCode.code) {
+            throw new CustomError(400, 'Incorrect code')
         }
 
         const memberId = await this.accountsRepo.createAccount(
             userId,
             name,
             surname,
+            timeZone,
             slackId
         )
         return memberId

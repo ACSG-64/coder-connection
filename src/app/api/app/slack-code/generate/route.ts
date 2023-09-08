@@ -1,5 +1,5 @@
 import options from '@/app/api/auth/[...nextauth]/options'
-import TYPES from '@/backend/configuration/TYPES'
+import TYPES from '@/backend/configuration/di-types/register-user/TYPES'
 import { NextRequest, NextResponse } from 'next/server'
 import { AccountsRepository } from '@/backend/infrastructure/repositories/accounts-repository'
 import { getServerSession } from 'next-auth/next'

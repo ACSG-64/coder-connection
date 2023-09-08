@@ -7,32 +7,23 @@ import {
     IAccountsRepository,
     RegisterUserUseCase
 } from '@/backend/configuration/interfaces'
-import TYPES from '@/backend/configuration/TYPES'
+// import TYPES from '@/backend/configuration/TYPES'
 import { RegisterUserController } from '@/backend/core/services/register-user/controllers/register-user-controller'
 import { AccountsRepository } from '@/backend/infrastructure/repositories/accounts-repository'
 import CustomError from '@/backend/constants/custom-error'
 import { CreateNewMemberCommand } from '@/backend/core/services/register-user/models/create-new-member-command'
-
-const container = new Container()
-container
-    .bind<IAccountsRepository>(TYPES.IAccountsRepository)
-    .to(AccountsRepository)
-container
-    .bind<RegisterUserUseCase>(TYPES.RegisterUserUseCase)
-    .to(RegisterUserController)
-
-const registerUserUseCase = container.get<RegisterUserUseCase>(
-    TYPES.RegisterUserUseCase
-)
+import { TimeZoneDTO } from '@/backend/core/shared/dtos/time-zone-dto'
+import { DIContainer, TYPES } from './config/di-container'
 
 export async function POST(req: NextRequest) {
     const { user } = (await getServerSession(options)) as Session
-    const {
-        name,
-        surname,
-        slackId,
-        verificationCode: providedCode
-    } = await req.json()
+    const { name, surname, timeZone, slackId, verificationCode } =
+        await req.json()
+
+    const container = await DIContainer
+    const registerUserUseCase = container.get<RegisterUserUseCase>(
+        TYPES.RegisterUserUseCase
+    )
 
     let createNewMemberCmd: CreateNewMemberCommand
     try {
@@ -40,8 +31,9 @@ export async function POST(req: NextRequest) {
             user.id,
             name,
             surname,
+            new TimeZoneDTO(timeZone.id, timeZone.name),
             slackId,
-            providedCode
+            verificationCode
         )
     } catch (e) {
         if (e instanceof CustomError) {

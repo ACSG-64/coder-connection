@@ -8,6 +8,7 @@ import {
     SlackVerificationCode,
     User
 } from '../sequelize/models'
+import { TimeZoneDTO } from '@/backend/core/shared/dtos/time-zone-dto'
 
 @injectable()
 export class AccountsRepository implements IAccountsRepository {
@@ -18,11 +19,13 @@ export class AccountsRepository implements IAccountsRepository {
     async createOnboardingAccount(
         ghId: number,
         ghNodeId: string,
-        ghUserName: string
+        ghUserName: string,
+        ghProfileImg: string
     ): Promise<string> {
         // Create a new account
         const account = await OnboardingUser.create({
             username: ghUserName,
+            profileImg: ghProfileImg,
             gitHubId: ghId,
             gitHubNodeId: ghNodeId
         })
@@ -77,23 +80,31 @@ export class AccountsRepository implements IAccountsRepository {
         onboardingAccountId: string,
         name: string,
         surname: string,
+        timeZone: TimeZoneDTO,
         slackId: string
     ): Promise<string> {
         const onboardingAccount =
             await OnboardingUser.findByPk(onboardingAccountId)
         if (!onboardingAccount)
             throw new Error("Onboarding account doesn't exists")
-        const { gitHubId, gitHubNodeId, username } = onboardingAccount
+
+        /* Create a new user using */
+        const { gitHubId, gitHubNodeId, username, profileImg } =
+            onboardingAccount
+
         const { id } = await User.create({
             name,
             surname,
             username,
+            profileImg,
             gitHubId,
             gitHubNodeId,
             slackId,
-            image: 'IMAGE'
+            timeZoneId: timeZone.id
         })
+
         onboardingAccount.destroy({ force: true })
+
         return id
     }
 

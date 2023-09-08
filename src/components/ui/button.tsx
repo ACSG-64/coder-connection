@@ -67,8 +67,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     <span className="text-xl">
                         <Icon />
                     </span>
-                )}
-                {children && <span>{children}</span>}
+                )}{' '}
+                {children}
             </Comp>
         )
     }

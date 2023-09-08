@@ -10,15 +10,6 @@ import {
 } from '../ui/card'
 import { Separator } from '../ui/separator'
 
-interface TopicItem {
-    id: number
-    value: string
-}
-
-type tag = {
-    id: number
-    name: string
-}
 export interface IdeaCardProps {
     title: string
     summary?: string

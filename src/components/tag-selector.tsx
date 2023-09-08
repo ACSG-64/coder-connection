@@ -13,7 +13,6 @@ import {
 import { Button } from './ui/button'
 import { ScrollArea } from './ui/scroll-area'
 
-type tag = { id: number; name: string }
 interface TagsSelectorProps {
     tags: tag[]
     buttonLabel?: string

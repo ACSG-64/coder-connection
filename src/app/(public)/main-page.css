@@ -1,0 +1,21 @@
+.grid-background {
+    background-image: url('/src/images/perspective-grid.png');
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.text-gradient {
+    background: linear-gradient(
+        25deg,
+        rgba(122, 58, 255, 1) 0%,
+        rgba(136, 83, 253, 1) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.cards-section {
+    transform: translateY(10vh);
+}

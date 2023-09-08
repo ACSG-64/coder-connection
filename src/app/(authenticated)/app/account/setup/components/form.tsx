@@ -1,7 +1,7 @@
 'use client'
 
 import * as z from 'zod'
-import formSchema from '@/app/api/app/members/register/form-schema'
+import { newUserForm } from '@/backend/core/services/register-user/schemas/new-user-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, useWatch } from 'react-hook-form'
 import {
@@ -19,21 +19,33 @@ import { Metadata } from 'next'
 import { signOut } from 'next-auth/react'
 import { useState } from 'react'
 import { FaSlack } from 'react-icons/fa6'
+import TimeZonesSelector from './time-zone-selector'
 
 export const metadata: Metadata = {
     title: 'Account setup',
     description: 'Setup your account to become a full member'
 }
 
-export default function OnboardingUserForm() {
+interface OnboardingUserFormProps {
+    timeZones: tag[]
+}
+
+export default function OnboardingUserForm({
+    timeZones
+}: OnboardingUserFormProps) {
     const [isSendingData, setIsSendingData] = useState(false)
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema)
+    const form = useForm<z.infer<typeof newUserForm>>({
+        resolver: zodResolver(newUserForm)
     })
     const slackId = useWatch({
         name: 'slackId',
         control: form.control
     })
+
+    const selectTimeZone = (timeZone: tag) => {
+        form.setValue('timeZone', timeZone)
+        form.trigger('timeZone')
+    }
 
     const requestCodeHandler = async () => {
         const isValidField = await form.trigger('slackId')
@@ -50,7 +62,7 @@ export default function OnboardingUserForm() {
         setIsSendingData(false)
     }
 
-    const submitHandler = async (values: z.infer<typeof formSchema>) => {
+    const submitHandler = async (values: z.infer<typeof newUserForm>) => {
         setIsSendingData(true)
         const res = await fetch('/api/app/members/register', {
             method: 'POST',
@@ -71,8 +83,8 @@ export default function OnboardingUserForm() {
         <>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(submitHandler)}>
-                    {/* Name */}
                     <H2>1. Enter your basic details</H2>
+                    {/* Name */}
                     <FormField
                         control={form.control}
                         name="name"
@@ -100,6 +112,25 @@ export default function OnboardingUserForm() {
                             </FormItem>
                         )}
                     />
+                    {/* Time zones */}
+                    <FormField
+                        control={form.control}
+                        name="timeZone"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Time zone:</FormLabel>
+                                <FormControl>
+                                    <TimeZonesSelector
+                                        onSelect={selectTimeZone}
+                                        value={field.value}
+                                        timeZones={timeZones}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    {/* Name */}
                     <H2>2. Request access to our Slack workspace</H2>
                     <H2>3. Link your Slack profile</H2>
                     <Paragraph>
@@ -109,39 +140,33 @@ export default function OnboardingUserForm() {
                         code, request it again.
                     </Paragraph>
                     {/* Slack ID */}
-                    <div className="">
-                        <FormField
-                            control={form.control}
-                            name="slackId"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Slack ID:</FormLabel>
+                    <FormField
+                        control={form.control}
+                        name="slackId"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Slack ID:</FormLabel>
+                                <div className="flex gap-4">
                                     <FormControl>
-                                        <div className="flex items-end gap-4">
-                                            <Input
-                                                placeholder="B457AD"
-                                                {...field}
-                                            />
-                                            <Button
-                                                type="button"
-                                                variant={'secondary'}
-                                                disabled={isSendingData}
-                                                onClick={() =>
-                                                    requestCodeHandler()
-                                                }
-                                            >
-                                                <span className="text-xl">
-                                                    <FaSlack />
-                                                </span>
-                                                Send verification code
-                                            </Button>
-                                        </div>
+                                        <Input
+                                            placeholder="B457AD"
+                                            {...field}
+                                        />
                                     </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
+                                    <Button
+                                        type="button"
+                                        variant={'secondary'}
+                                        icon={FaSlack}
+                                        disabled={isSendingData}
+                                        onClick={() => requestCodeHandler()}
+                                    >
+                                        Send verification code
+                                    </Button>
+                                </div>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     {/* Verification code */}
                     <FormField
                         control={form.control}

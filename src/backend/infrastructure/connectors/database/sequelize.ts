@@ -1,3 +1,4 @@
+import * as dotenv from 'dotenv'
 import args from '@/utils/args'
 import { Sequelize } from 'sequelize-typescript'
 import * as Models from '@/backend//infrastructure/sequelize/models'
@@ -11,14 +12,16 @@ function getSequelizeInstance() {
             return new Sequelize({
                 dialect: 'sqlite',
                 storage: 'dev_db.sqlite'
-                //timezone: '00:00'
-                //repositoryMode: true
             })
         case 'testing':
             return new Sequelize('sqlite::memory:')
         default:
-            // TODO add production configuration
-            return new Sequelize()
+            dotenv.config()
+            /* @ts-ignore */
+            return new Sequelize(process.env.PRODUCTION_DB_CONNECTION, {
+                dialect: 'postgres',
+                timezone: '00:00'
+            })
     }
 }
 

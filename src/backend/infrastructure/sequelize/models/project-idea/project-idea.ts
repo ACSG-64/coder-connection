@@ -2,6 +2,7 @@ import {
     BelongsToMany,
     Column,
     CreatedAt,
+    Default,
     HasMany,
     Model,
     PrimaryKey,
@@ -24,13 +25,14 @@ export class ProjectIdea extends Model {
 
     @Unique
     @Column
-    slackChannelId?: string
-
-    @Column
-    latestCommitSHA!: string
+    slackChannelId!: string
 
     @BelongsToMany(() => Topic, () => TopicProject)
     topics?: Topic[]
+
+    @Default(true)
+    @Column
+    isPublic!: boolean
 
     @HasMany(() => Project)
     projects?: Project[]

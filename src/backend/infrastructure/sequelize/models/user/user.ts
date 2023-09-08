@@ -45,6 +45,13 @@ export class User extends Model {
     @Column(DataType.STRING(500))
     description!: string
 
+    @Column(DataType.STRING(200))
+    profileImg?: string
+
+    @Default('')
+    @Column(DataType.STRING(100))
+    linkedInProfileUrl!: string
+
     @Unique
     @Column
     gitHubId!: number
@@ -52,12 +59,6 @@ export class User extends Model {
     @Unique
     @Column
     gitHubNodeId!: string
-
-    @Column
-    gitHubProfileImg?: string
-
-    @Column(DataType.STRING(100))
-    linkedInProfileUrl!: string
 
     @Unique
     @Column(DataType.STRING(10))

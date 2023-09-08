@@ -20,6 +20,9 @@ export class OnboardingUser extends Model {
     @Column(DataType.STRING(35))
     username!: string
 
+    @Column(DataType.STRING(200))
+    profileImg?: string
+
     @Unique
     @Column
     gitHubId!: number

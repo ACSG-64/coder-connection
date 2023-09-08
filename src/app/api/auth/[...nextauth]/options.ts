@@ -9,24 +9,27 @@ const options: NextAuthOptions = {
         GitHubProvider({
             /* @ts-ignore */
             async profile(profile: GithubProfile) {
-                const { id: ghId, login, node_id } = profile
+                const { id: ghId, login, node_id, avatar_url } = profile
+                profile.name = login
+                profile.image = avatar_url
 
                 let id: string | void
                 // Find user
                 id = await accountsRepository.getAccountIdByGHId(ghId)
-                if (id) return { ...profile, name: login, isMember: true, id }
+                if (id) return { ...profile, isMember: true, id }
 
                 // If doesn't exist, find OnboardingUser
                 id = await accountsRepository.getOnboardingAccountIdByGHId(ghId)
-                if (id) return { ...profile, name: login, isMember: false, id }
+                if (id) return { ...profile, isMember: false, id }
 
                 // if doesn't exist, create an OnboardingUser
                 id = await accountsRepository.createOnboardingAccount(
                     ghId,
                     node_id,
-                    login
+                    login,
+                    profile.image
                 )
-                return { ...profile, name: login, isMember: false, id }
+                return { ...profile, isMember: false, id }
             },
             clientId: process.env.GITHUB_OAUTH_ID!,
             clientSecret: process.env.GITHUB_OAUTH_SECRET!,

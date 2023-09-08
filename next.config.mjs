@@ -13,6 +13,7 @@ const nextConfig = {
 
 const withMDX = createMDX({
     options: {
+        providerImportSource: '@mdx-js/react',
         format: 'md',
         remarkPlugins: [remarkGfm, remarkRemoveComments],
         rehypePlugins: [rehypePrettyCode]

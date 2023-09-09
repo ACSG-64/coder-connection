@@ -53,6 +53,9 @@ const options: NextAuthOptions = {
             }
             return session
         }
+    },
+    pages: {
+        signIn: '/auth/access'
     }
 }
 

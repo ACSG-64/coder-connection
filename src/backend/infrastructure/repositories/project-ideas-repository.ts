@@ -2,20 +2,23 @@ import { TopicDTO } from '@/backend/core/shared/dtos/topic-dto'
 import orm from '../connectors/database/sequelize'
 import {
     ProjectIdea as _ProjectIdea,
+    Topic,
     TopicProject,
     User
 } from '../sequelize/models'
 import { IProjectIdeasRepository } from '@/backend/core/services/project-ideas/repositories/i-project-ideas-repository'
 import { injectable } from 'inversify'
-import { ProjectIdeaAttributes } from '@/backend/core/services/project-ideas/models/ideas/project-idea-attributes'
+import { ProjectIdeaModifiableAttributes } from '@/backend/core/services/project-ideas/models/ideas/project-idea-modfiable-attributes'
 import { Op } from 'sequelize'
 import { GitHubApp } from '../connectors/network/github-app'
 import { ProjectIdeaDetails } from '@/backend/core/services/project-ideas/models/ideas/project-idea-details'
+import { ProjectIdea } from '@/backend/core/services/project-ideas/models/ideas/project-idea'
+import { ProjectIdeaSummary } from '@/backend/core/services/project-ideas/models/ideas/project-ideas-summary'
 
 @injectable()
 export class ProjectIdeasRepository implements IProjectIdeasRepository {
     constructor() {
-        orm.addModels([User, _ProjectIdea, TopicProject])
+        orm.addModels([User, _ProjectIdea, TopicProject, Topic])
     }
 
     async create(project: ProjectIdeaDetails): Promise<number> {
@@ -56,9 +59,57 @@ export class ProjectIdeasRepository implements IProjectIdeasRepository {
         return projectIdeaId
     }
 
-    async get(id: number) {}
+    async get(id: number) {
+        const result = await _ProjectIdea.findByPk(id, { include: Topic })
+        if (!result) return
+        const readme = await this.getReadme(result?.dataValues.nodeId)
+        const {
+            id: ghId,
+            nodeId,
+            name,
+            summary,
+            slackChannelId,
+            isPublic
+        } = result.dataValues
+        const topics = result.dataValues.topics as Topic[]
+        return new ProjectIdea(
+            ghId,
+            nodeId,
+            name,
+            summary,
+            topics.map(({ id, name }) => new TopicDTO(id, name)),
+            slackChannelId,
+            isPublic,
+            readme
+        )
+    }
 
-    async getSummary(id: number) {}
+    async getSummaries(
+        includePrivates: boolean,
+        offset?: number,
+        limit?: number
+    ) {
+        let results: _ProjectIdea[]
+        if (limit != undefined && offset != undefined) {
+            results = await this.querySummariesWithPagination(
+                includePrivates,
+                offset,
+                limit
+            )
+        } else {
+            results = await this.querySummaries(includePrivates)
+        }
+        return results.map(({ dataValues: record }) => {
+            const topics = record.topics as Topic[]
+            return new ProjectIdeaSummary(
+                record.id,
+                record.nodeId,
+                record.name,
+                record.summary,
+                topics.map(({ id, name }) => new TopicDTO(id, name))
+            )
+        })
+    }
 
     async getSlackId(ideaId: number) {
         const result = await _ProjectIdea.findByPk(ideaId, {
@@ -67,11 +118,10 @@ export class ProjectIdeasRepository implements IProjectIdeasRepository {
         return result?.slackChannelId
     }
 
-    async update(id: number, attributes: ProjectIdeaAttributes) {
+    async update(id: number, attributes: ProjectIdeaModifiableAttributes) {
         if (!(await this.checkIfExists(id))) return
         const { title, summary, topics } = attributes
         const topicsIds = topics.map(({ id }) => id)
-        console.log('topicsIds', topicsIds)
 
         /* Topics to delete */
         // Queries
@@ -84,7 +134,6 @@ export class ProjectIdeasRepository implements IProjectIdeasRepository {
         //console.log('topicsToDeleteRes', topicsToDeleteRes[0].)
         // Selection
         const topicsToDelete = topicsToDeleteRes.map(({ topicId }) => topicId)
-        console.log('topicsToDelete', topicsToDelete)
 
         /* Topics to add */
         // Queries
@@ -94,14 +143,12 @@ export class ProjectIdeasRepository implements IProjectIdeasRepository {
                 topicId: { [Op.in]: topicsIds }
             }
         })
-        console.log('sharedTopics', sharedTopics, Object.keys(sharedTopics))
         // Union
         const sharedTopicsSet = new Set(
             sharedTopics.map(({ topicId }) => topicId)
         )
         // Selection
         const topicsToAdd = topicsIds.filter((id) => !sharedTopicsSet.has(id))
-        console.log('topicsToAdd', topicsToAdd)
 
         /* Update data */
         await orm.transaction(async (t) => {
@@ -165,14 +212,40 @@ export class ProjectIdeasRepository implements IProjectIdeasRepository {
         await _ProjectIdea.update({ isPublic: true }, { where: { id } })
     }
 
-    private async getReadme(ghNodeId: number) {
+    private async querySummaries(includePrivates: boolean) {
+        if (includePrivates) {
+            return await _ProjectIdea.findAll({ include: Topic })
+        }
+        return await _ProjectIdea.findAll({
+            where: { isPublic: true },
+            include: Topic
+        })
+    }
+
+    private async querySummariesWithPagination(
+        includePrivates: boolean,
+        offset: number,
+        limit: number
+    ) {
+        if (includePrivates) {
+            return await _ProjectIdea.findAll({ include: Topic, offset, limit })
+        }
+        return await _ProjectIdea.findAll({
+            where: { isPublic: true },
+            include: Topic,
+            offset,
+            limit
+        })
+    }
+
+    private async getReadme(ghNodeId: string) {
         const ghApp = await GitHubApp.instance
         const res = await ghApp.graphql<{ node: { object: { text: string } } }>(
             `
             query ($nodeId: ID!) {
                 node(id: $nodeId) {
                     ... on Repository {
-                        object(expression: "master:README.md") {
+                        object(expression: "main:README.md") {
                             ... on Blob {
                                 text
                             }
@@ -182,7 +255,7 @@ export class ProjectIdeasRepository implements IProjectIdeasRepository {
             }`,
             { nodeId: ghNodeId }
         )
-        const readmeBase64 = res.node.object.text ?? ''
-        return Buffer.from(readmeBase64, 'base64').toString('utf-8')
+        const readme = res?.node?.object?.text ?? ''
+        return readme
     }
 }

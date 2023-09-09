@@ -4,7 +4,7 @@ import TYPES from '@/backend/configuration/di-types/project-ideas/TYPES'
 import type { IProjectIdeasRepository } from '../repositories/i-project-ideas-repository'
 import { SlackApp } from '@/backend/infrastructure/connectors/network/slack-app'
 import { TopicsDAO } from '@/backend/infrastructure/daos/topics-dao'
-import { ProjectIdeaAttributes } from '../models/ideas/project-idea-attributes'
+import { ProjectIdeaModifiableAttributes } from '../models/ideas/project-idea-modfiable-attributes'
 import { ProjectIdeaGH } from '../models/ideas/project-idea-gh'
 import { ProjectIdeaDetails } from '../models/ideas/project-idea-details'
 import {
@@ -13,7 +13,7 @@ import {
 } from '../use-cases/manage-project-idea-use-case'
 
 @injectable()
-export class ProjectIdeasController implements ManageProjectIdeaUseCase {
+export class ProjectIdeasManagerController implements ManageProjectIdeaUseCase {
     constructor(
         @inject(TYPES.IProjectIdeaProposalsRepository)
         private readonly projectIdeaProposalsRepo: IProjectIdeaProposalsRepository,
@@ -90,7 +90,11 @@ export class ProjectIdeasController implements ManageProjectIdeaUseCase {
         const title = this.formatName(idea.title)
         // Create the project idea
         const topics = await new TopicsDAO().getByNames(idea.topics)
-        const project = new ProjectIdeaAttributes(title, summary, topics)
+        const project = new ProjectIdeaModifiableAttributes(
+            title,
+            summary,
+            topics
+        )
         await this.projectIdeasRepo.update(ghId, project)
     }
 

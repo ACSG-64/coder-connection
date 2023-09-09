@@ -2,7 +2,6 @@
 import { H1, H2, H3, Large, Paragraph } from '@/components/ui/typography'
 import Image from 'next/image'
 
-import './main-page.css'
 import { Button } from '@/components/ui/button'
 import {
     Card,

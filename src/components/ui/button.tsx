@@ -102,11 +102,11 @@ const AnchorButton = React.forwardRef<HTMLAnchorElement, AnchorButtonProps>(
                 {...props}
             >
                 {Icon && (
-                    <div className="text-xl">
+                    <span className="text-xl">
                         <Icon />
-                    </div>
-                )}
-                <span>{children}</span>
+                    </span>
+                )}{' '}
+                {children}
             </Link>
         )
     }

@@ -1,3 +1,4 @@
+import '../globals.css'
 import type { Metadata } from 'next'
 import { Nav } from '../../components/navs/lateral-nav'
 import { ScrollArea } from '@/components/ui/scroll-area'

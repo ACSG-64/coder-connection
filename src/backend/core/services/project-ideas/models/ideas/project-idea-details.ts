@@ -1,5 +1,5 @@
 import { TopicDTO } from '@/backend/core/shared/dtos/topic-dto'
-import { ProjectIdeaCommon } from './project-idea-common'
+import { ProjectIdeaCommon } from './abstract/project-idea-common'
 
 export class ProjectIdeaDetails extends ProjectIdeaCommon<TopicDTO> {
     constructor(

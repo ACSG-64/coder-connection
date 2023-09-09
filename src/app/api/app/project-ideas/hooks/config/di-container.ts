@@ -13,7 +13,7 @@ async function getDIContainer() {
     const projectIdeasRepository_p = import(
         '@/backend/infrastructure/repositories/project-ideas-repository'
     )
-    // ProjectIdeasController
+    // ProjectIdeasManagerController
     const projectIdeasController_p = import(
         '@/backend/core/services/project-ideas/controllers/project-ideas-controller'
     )
@@ -21,7 +21,7 @@ async function getDIContainer() {
     const [
         { ProjectIdeaProposalsRepository },
         { ProjectIdeasRepository },
-        { ProjectIdeasController }
+        { ProjectIdeasManagerController }
     ] = await Promise.all([
         projectIdeaProposalsRepository_p,
         projectIdeasRepository_p,
@@ -38,7 +38,7 @@ async function getDIContainer() {
         .to(ProjectIdeasRepository)
     container
         .bind<ManageProjectIdeaUseCase>(TYPES.ManageProjectIdeaUseCase)
-        .to(ProjectIdeasController)
+        .to(ProjectIdeasManagerController)
 
     return container
 }

@@ -3,6 +3,7 @@ const TYPES = {
         'CreateProjectIdeaProposalUseCase'
     ),
     ManageProjectIdeaUseCase: Symbol('ManageProjectIdeaUseCase'),
+    RetrieveProjectsUseCase: Symbol('RetrieveProjectsUseCase'),
     IProjectIdeaProposalsRepository: Symbol('IProjectIdeaProposalsRepository'),
     IProjectIdeasRepository: Symbol('IProjectIdeasRepository')
 }

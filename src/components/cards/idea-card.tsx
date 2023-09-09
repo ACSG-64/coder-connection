@@ -12,12 +12,18 @@ import { Separator } from '../ui/separator'
 
 export interface IdeaCardProps {
     title: string
+    url: string
     summary?: string
     topics?: tag[]
 }
 
 // <Anchor variant="outline">Project details</Anchor>
-export default function IdeaCard({ title, summary, topics }: IdeaCardProps) {
+export default function IdeaCard({
+    title,
+    summary,
+    topics,
+    url
+}: IdeaCardProps) {
     return (
         <Card className="flex flex-col">
             <CardHeader>
@@ -35,7 +41,9 @@ export default function IdeaCard({ title, summary, topics }: IdeaCardProps) {
             </CardContent>
             <Separator className="mb-4" />
             <CardFooter className="flex justify-end">
-                <AnchorButton variant={'outline'}>See details</AnchorButton>
+                <AnchorButton variant={'outline'} href={url}>
+                    See details
+                </AnchorButton>
             </CardFooter>
         </Card>
     )

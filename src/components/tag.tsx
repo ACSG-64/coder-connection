@@ -1,6 +1,6 @@
 'use client'
 
-import { FiX, FiXCircle } from 'react-icons/fi'
+import { FiX } from 'react-icons/fi'
 import { Button } from './ui/button'
 import { Small } from './ui/typography'
 
@@ -18,8 +18,6 @@ interface TagProps {
 }
 
 export default function Tag({ id, name, onDelete }: TagProps) {
-    // Apply color based on position of the first letter in the alphabet
-    //const color = getColorByLetter(value)
     const color = colorsArr[id % colorsArr.length]
 
     return (

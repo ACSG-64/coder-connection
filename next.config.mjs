@@ -8,6 +8,12 @@ const nextConfig = {
     experimental: {
         serverComponentsExternalPackages: ['sequelize', 'sequelize-typescript'],
         mdxRs: true
+    },
+    images: {
+        domains: [
+            'avatars.githubusercontent.com', // GitHub profile image
+            'opengraph.githubassets.com' // Repo OpenGraph image
+        ]
     }
 }
 

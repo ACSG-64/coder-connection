@@ -28,9 +28,8 @@ export class ProjectIdea extends Model {
     @Column
     summary?: string
 
-    //@Unique
-    //@Column
-    //repositoryUrl!: string
+    @Column
+    repositoryUrl!: string
 
     @Unique
     @Column
@@ -42,9 +41,6 @@ export class ProjectIdea extends Model {
     @Default(true)
     @Column
     isPublic!: boolean
-
-    @HasMany(() => Project)
-    projects?: Project[]
 
     @CreatedAt
     createdAt!: Date

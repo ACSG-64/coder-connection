@@ -10,7 +10,7 @@ import {
     PrimaryKey,
     Table
 } from 'sequelize-typescript'
-import { Application, Skill, TalentPostSkill, WorkingGroup } from '..'
+import { GroupApplication, Skill, TalentPostSkill, WorkingGroup } from '..'
 
 @Table
 export class TalentPost extends Model {
@@ -27,8 +27,8 @@ export class TalentPost extends Model {
     @Column
     workingGroupId!: number
 
-    @HasMany(() => Application)
-    application?: Application[]
+    @HasMany(() => GroupApplication)
+    application!: GroupApplication[]
 
     @BelongsToMany(() => Skill, () => TalentPostSkill)
     skills!: Skill[]

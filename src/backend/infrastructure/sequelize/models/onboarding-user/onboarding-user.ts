@@ -20,9 +20,6 @@ export class OnboardingUser extends Model {
     @Column(DataType.STRING(35))
     username!: string
 
-    @Column(DataType.STRING(200))
-    profileImg?: string
-
     @Unique
     @Column
     gitHubId!: number
@@ -30,6 +27,12 @@ export class OnboardingUser extends Model {
     @Unique
     @Column
     gitHubNodeId!: string
+
+    @Column(DataType.STRING(200))
+    profileImg?: string
+
+    @Column(DataType.STRING(100))
+    gitHubProfileUrl!: string
 
     @HasOne(() => SlackVerificationCode, { onDelete: 'CASCADE' })
     verificationCode!: any

@@ -7,6 +7,7 @@ import {
     Default,
     ForeignKey,
     HasMany,
+    Index,
     IsUUID,
     Model,
     PrimaryKey,
@@ -14,8 +15,8 @@ import {
     Unique
 } from 'sequelize-typescript'
 import {
-    Application,
-    Membership,
+    GroupApplication,
+    GroupMembership,
     Project,
     Skill,
     TimeZone,
@@ -38,6 +39,7 @@ export class User extends Model {
     @Column(DataType.STRING(25))
     surname!: string
 
+    @Unique
     @Column(DataType.STRING(35))
     username!: string
 
@@ -46,7 +48,10 @@ export class User extends Model {
     description!: string
 
     @Column(DataType.STRING(200))
-    profileImg?: string
+    profileImg!: string
+
+    @Column(DataType.STRING(100))
+    gitHubProfileUrl!: string
 
     @Default('')
     @Column(DataType.STRING(100))
@@ -61,7 +66,7 @@ export class User extends Model {
     gitHubNodeId!: string
 
     @Unique
-    @Column(DataType.STRING(10))
+    @Column(DataType.STRING(22))
     slackId!: string
 
     @BelongsTo(() => TimeZone)
@@ -83,10 +88,10 @@ export class User extends Model {
     @BelongsToMany(() => Project, () => UserProject)
     projects?: Project[]
 
-    @HasMany(() => Application)
-    applications?: Application[]
+    @HasMany(() => GroupApplication)
+    applications?: GroupApplication[]
 
-    @BelongsToMany(() => WorkingGroup, () => Membership)
+    @BelongsToMany(() => WorkingGroup, () => GroupMembership)
     workingGroups?: WorkingGroup[]
 
     @Column

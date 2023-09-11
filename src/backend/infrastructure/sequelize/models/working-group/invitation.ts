@@ -1,10 +1,11 @@
 import {
     BelongsTo,
     Column,
+    DataType,
     Default,
     ForeignKey,
+    IsUUID,
     Model,
-    PrimaryKey,
     Table,
     Unique
 } from 'sequelize-typescript'
@@ -12,19 +13,18 @@ import { WorkingGroup } from '..'
 
 @Table
 export class Invitation extends Model {
-    @PrimaryKey
-    @ForeignKey(() => WorkingGroup)
-    @Column
-    workingGroupId!: number
-
+    @IsUUID(4)
     @Unique
-    @Column
+    @Column({ defaultValue: DataType.UUIDV4 })
     invitationCode!: string
 
-    @Default(true)
+    @Default(false)
     @Column
-    isActive!: boolean
+    isPublic!: boolean
 
     @BelongsTo(() => WorkingGroup)
     workingGroup!: any
+    @ForeignKey(() => WorkingGroup)
+    @Column
+    workingGroupId!: number
 }

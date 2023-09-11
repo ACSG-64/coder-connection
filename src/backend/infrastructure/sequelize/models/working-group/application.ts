@@ -9,7 +9,7 @@ import {
 import { TalentPost, User } from '..'
 
 @Table
-export class Application extends Model {
+export class GroupApplication extends Model {
     @PrimaryKey
     @ForeignKey(() => User)
     @Column

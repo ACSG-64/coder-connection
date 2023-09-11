@@ -11,7 +11,7 @@ import {
 } from 'sequelize-typescript'
 import { Project, TalentPost, User } from '..'
 import { Invitation } from './invitation'
-import { Membership } from './membership'
+import { GroupMembership } from './membership'
 
 @Table
 export class WorkingGroup extends Model {
@@ -31,6 +31,6 @@ export class WorkingGroup extends Model {
     @HasMany(() => TalentPost)
     talentPosts?: TalentPost[]
 
-    @BelongsToMany(() => User, () => Membership)
+    @BelongsToMany(() => User, () => GroupMembership)
     members!: User[]
 }

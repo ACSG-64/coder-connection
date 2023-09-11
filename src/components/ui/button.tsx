@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { IconType } from 'react-icons'
+import { CgSpinner, CgSpinnerTwoAlt } from 'react-icons/cg'
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -39,6 +40,7 @@ const buttonVariants = cva(
 export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement>,
         VariantProps<typeof buttonVariants> {
+    loading?: boolean
     asChild?: boolean
     icon?: IconType
 }
@@ -51,6 +53,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             size,
             asChild = false,
             children,
+            loading = false,
             icon: Icon,
             ...props
         },
@@ -69,6 +72,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     </span>
                 )}{' '}
                 {children}
+                {loading && (
+                    <span className="animate-spin text-xl">
+                        <CgSpinner />
+                    </span>
+                )}
             </Comp>
         )
     }
@@ -102,11 +110,11 @@ const AnchorButton = React.forwardRef<HTMLAnchorElement, AnchorButtonProps>(
                 {...props}
             >
                 {Icon && (
-                    <div className="text-xl">
+                    <span className="text-xl">
                         <Icon />
-                    </div>
-                )}
-                <span>{children}</span>
+                    </span>
+                )}{' '}
+                {children}
             </Link>
         )
     }

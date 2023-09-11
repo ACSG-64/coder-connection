@@ -5,18 +5,34 @@ import GitHubProvider, { GithubProfile } from 'next-auth/providers/github'
 const accountsRepository = new AccountsRepository()
 
 const options: NextAuthOptions = {
+    session: {
+        strategy: 'jwt'
+    },
     providers: [
         GitHubProvider({
             /* @ts-ignore */
             async profile(profile: GithubProfile) {
-                const { id: ghId, login, node_id, avatar_url } = profile
+                const {
+                    id: ghId,
+                    login,
+                    html_url,
+                    node_id,
+                    avatar_url
+                } = profile
                 profile.name = login
                 profile.image = avatar_url
 
                 let id: string | void
                 // Find user
                 id = await accountsRepository.getAccountIdByGHId(ghId)
-                if (id) return { ...profile, isMember: true, id }
+                if (id) {
+                    await accountsRepository.updateGitHubData(
+                        ghId,
+                        html_url,
+                        profile.image
+                    )
+                    return { ...profile, isMember: true, id }
+                }
 
                 // If doesn't exist, find OnboardingUser
                 id = await accountsRepository.getOnboardingAccountIdByGHId(ghId)
@@ -27,6 +43,7 @@ const options: NextAuthOptions = {
                     ghId,
                     node_id,
                     login,
+                    html_url,
                     profile.image
                 )
                 return { ...profile, isMember: false, id }

@@ -70,7 +70,6 @@
     "sequelize": "^6.32.1",
     "sequelize-typescript": "^2.1.5",
     "swagger-ui-react": "^5.3.1",
-    "swr": "^2.2.2",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.6",
     "typescript": "5.1.6",

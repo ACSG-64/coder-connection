@@ -1,5 +1,5 @@
 import options from '@/app/api/auth/[...nextauth]/options'
-import { MembersRepository } from '@/backend/infrastructure/repositories/members-repitory'
+import { MembersRepository } from '@/backend/infrastructure/repositories/members-repository'
 import MemberCard from '@/components/cards/member-card'
 import { H1 } from '@/components/ui/typography'
 import { getServerSession } from 'next-auth/next'

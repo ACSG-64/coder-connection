@@ -36,4 +36,17 @@ function getSequelize() {
     return sequelize
 }
 
-export default getSequelize()
+let sequelize: Sequelize
+if (process.env.NODE_ENV === 'production') {
+    sequelize = getSequelize()
+} else {
+    /* @ts-ignore */
+    if (!global.sequelize) {
+        /* @ts-ignore */
+        global.sequelize = getSequelize()
+    }
+    /* @ts-ignore */
+    sequelize = addModels(global.sequelize)
+}
+
+export default sequelize

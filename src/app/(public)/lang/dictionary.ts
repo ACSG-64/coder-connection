@@ -13,6 +13,7 @@ export async function getDictionary(langCode: string = 'en') {
                     'Un lugar donde entusiastas de la tecnología pueden',
                 'big-motto': 'Desarrollar proyectos colaborativamente'
             }
+
             return { ...enDict, ...enLang }
         default:
             return enDict

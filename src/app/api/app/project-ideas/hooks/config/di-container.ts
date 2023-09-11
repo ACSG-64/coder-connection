@@ -15,7 +15,7 @@ async function getDIContainer() {
     )
     // ProjectIdeasManagerController
     const projectIdeasController_p = import(
-        '@/backend/core/services/project-ideas/controllers/project-ideas-controller'
+        '@/backend/core/services/project-ideas/controllers/project-ideas-manager-controller'
     )
 
     const [

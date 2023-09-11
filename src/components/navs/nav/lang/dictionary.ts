@@ -1,19 +1,9 @@
-const enDict = {
-    'project-ideas': 'Project ideas',
-    community: 'Community',
-    resources: 'Resources',
-    access: 'Access'
-}
+import enDict from './en.json'
 
 export async function getDictionary(lang: string = 'en') {
     switch (lang) {
         case 'es':
-            const dict = {
-                'project-ideas': 'Ideas de proyectos',
-                community: 'Comunidad',
-                resources: 'Recursos',
-                access: 'Acceder'
-            }
+            const dict = await import('./es.json')
             return { ...enDict, ...dict }
         default:
             return enDict

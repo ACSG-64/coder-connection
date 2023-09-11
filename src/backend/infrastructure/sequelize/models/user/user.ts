@@ -66,7 +66,7 @@ export class User extends Model {
     gitHubNodeId!: string
 
     @Unique
-    @Column(DataType.STRING(10))
+    @Column(DataType.STRING(22))
     slackId!: string
 
     @BelongsTo(() => TimeZone)

@@ -1,11 +1,14 @@
 import * as React from 'react'
+import { IconType } from 'react-icons'
+import { CgSpinner, CgSpinnerTwoAlt } from 'react-icons/cg'
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 const buttonVariants = cva(
-    'inline-flex items-center justify-center rounded-md text-lg font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+    'inline-flex items-center justify-center rounded-md text-lg font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 gap-2',
     {
         variants: {
             variant: {
@@ -37,21 +40,85 @@ const buttonVariants = cva(
 export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement>,
         VariantProps<typeof buttonVariants> {
+    loading?: boolean
     asChild?: boolean
+    icon?: IconType
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, size, asChild = false, ...props }, ref) => {
+    (
+        {
+            className,
+            variant,
+            size,
+            asChild = false,
+            children,
+            loading = false,
+            icon: Icon,
+            ...props
+        },
+        ref
+    ) => {
         const Comp = asChild ? Slot : 'button'
         return (
             <Comp
                 className={cn(buttonVariants({ variant, size, className }))}
                 ref={ref}
                 {...props}
-            />
+            >
+                {Icon && (
+                    <span className="text-xl">
+                        <Icon />
+                    </span>
+                )}{' '}
+                {children}
+                {loading && (
+                    <span className="animate-spin text-xl">
+                        <CgSpinner />
+                    </span>
+                )}
+            </Comp>
         )
     }
 )
 Button.displayName = 'Button'
 
-export { Button, buttonVariants }
+export interface AnchorButtonProps
+    extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
+        VariantProps<typeof buttonVariants> {
+    icon?: IconType
+}
+
+const AnchorButton = React.forwardRef<HTMLAnchorElement, AnchorButtonProps>(
+    (
+        {
+            className,
+            variant,
+            size,
+            href = '#',
+            children,
+            icon: Icon,
+            ...props
+        },
+        ref
+    ) => {
+        return (
+            <Link
+                className={cn(buttonVariants({ variant, size, className }))}
+                href={href}
+                ref={ref}
+                {...props}
+            >
+                {Icon && (
+                    <span className="text-xl">
+                        <Icon />
+                    </span>
+                )}{' '}
+                {children}
+            </Link>
+        )
+    }
+)
+AnchorButton.displayName = 'AnchorButton'
+
+export { Button, AnchorButton, buttonVariants }

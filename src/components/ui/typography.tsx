@@ -135,8 +135,24 @@ export const Large = ({
     ...rest
 }: React.HTMLProps<HTMLDivElement>) => {
     return (
-        <div className={cn('text-lg font-normal', className)} {...rest}>
+        <div className={cn('text-lg font-semibold', className)} {...rest}>
             {children}
         </div>
+    )
+}
+
+// List
+export const UL = ({
+    className,
+    children,
+    ...rest
+}: React.HTMLProps<HTMLUListElement>) => {
+    return (
+        <ul
+            className={cn('my-6 ml-6 list-disc [&>li]:mt-2', className)}
+            {...rest}
+        >
+            {children}
+        </ul>
     )
 }

@@ -19,6 +19,7 @@ import { Separator } from '@/components/ui/separator'
 import TagSelector from '@/components/tag-selector'
 import { profileFormSchema } from '@/backend/core/services/profiles/schemas/profile-form-schema'
 import { Label } from '@/components/ui/label'
+import { useState } from 'react'
 
 interface ProfileFormProps {
     name: string
@@ -37,12 +38,14 @@ export default function ProfileForm({
     competencies = [],
     interests = []
 }: ProfileFormProps) {
+    const [submitStatus, setSubmitStatus] = useState(false)
     const form = useForm<z.infer<typeof profileFormSchema>>({
         resolver: zodResolver(profileFormSchema),
         defaultValues: { name, surname, description }
     })
 
     const submitHandler = async (values: z.infer<typeof profileFormSchema>) => {
+        setSubmitStatus(true)
         const res = await fetch('/api/app/profile/update', {
             method: 'POST',
             headers: {
@@ -51,6 +54,7 @@ export default function ProfileForm({
             },
             body: JSON.stringify(values)
         })
+        setSubmitStatus(false)
     }
 
     const updateSkillsHandler = (skills: tag[]) => {
@@ -102,7 +106,7 @@ export default function ProfileForm({
                     control={form.control}
                     name="description"
                     render={({ field }) => (
-                        <FormItem className="flex max-w-4xl flex-wrap justify-between  gap-5 space-y-0">
+                        <FormItem className="flex max-w-4xl flex-wrap justify-between gap-5 space-y-0">
                             <div className="w-full max-w-sm">
                                 <FormLabel>Description:</FormLabel>
                                 <FormDescription>
@@ -192,7 +196,12 @@ export default function ProfileForm({
                     )}
                 />
                 <Separator className="my-5" />
-                <Button type="submit" className="ml-auto">
+                <Button
+                    type="submit"
+                    className="ml-auto"
+                    disabled={submitStatus}
+                    loading={submitStatus}
+                >
                     Finish account setup
                 </Button>
             </form>

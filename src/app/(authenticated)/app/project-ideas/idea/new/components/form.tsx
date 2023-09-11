@@ -16,12 +16,14 @@ import { Textarea } from '@/components/ui/textarea'
 import { projectIdeaFormSchema } from '@/backend/core/services/project-ideas/schemas/project-idea-form'
 import TagSelector from '@/components/tag-selector'
 import { FeatureField } from './feature-field'
+import { useState } from 'react'
 
 interface NewIdeaFormProps {
     topics: tag[]
 }
 
 export default function NewIdeaForm({ topics }: NewIdeaFormProps) {
+    const [submitStatus, setSubmitStatus] = useState(false)
     const form = useForm<z.infer<typeof projectIdeaFormSchema>>({
         resolver: zodResolver(projectIdeaFormSchema),
         defaultValues: {
@@ -42,6 +44,7 @@ export default function NewIdeaForm({ topics }: NewIdeaFormProps) {
     const submitHandler = async (
         values: z.infer<typeof projectIdeaFormSchema>
     ) => {
+        setSubmitStatus(true)
         await fetch('/api/app/project-ideas/idea/new', {
             method: 'POST',
             headers: {
@@ -50,6 +53,7 @@ export default function NewIdeaForm({ topics }: NewIdeaFormProps) {
             },
             body: JSON.stringify(values)
         })
+        setSubmitStatus(false)
     }
 
     return (
@@ -146,7 +150,13 @@ export default function NewIdeaForm({ topics }: NewIdeaFormProps) {
                     )}
                 />
                 <div className="flex justify-end">
-                    <Button type="submit">Submit project idea</Button>
+                    <Button
+                        type="submit"
+                        disabled={submitStatus}
+                        loading={submitStatus}
+                    >
+                        Submit project idea
+                    </Button>
                 </div>
             </form>
         </Form>

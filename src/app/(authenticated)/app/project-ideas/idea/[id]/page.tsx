@@ -1,4 +1,4 @@
-import ProjectIdeaDetailsPage from '@/_pages/project-idea-detail/page'
+import ProjectIdeaDetailsPage from '@/app/_pages/project-idea-detail/page'
 
 interface ProjectIdeaDetailsProps {
     params: { id: number }

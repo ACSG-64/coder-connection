@@ -11,7 +11,7 @@ import {
     DialogTrigger
 } from '@/components/ui/dialog'
 import { FaGithub, FaSlack } from 'react-icons/fa6'
-import NewGroupForm from './components/new-group-form'
+import NewGroupForm from '../project-ideas-list/components/new-group-form'
 import {
     Card,
     CardContent,

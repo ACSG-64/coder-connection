@@ -15,6 +15,7 @@ export const Card: Story = {
         name: 'Jane',
         surname: 'Roe',
         username: '@JaneRoeCoder',
-        affinityScore: 83
+        affinityScore: 83,
+        className: 'max-w-sm'
     }
 }

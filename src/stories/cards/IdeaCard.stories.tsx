@@ -19,6 +19,7 @@ export const Card: Story = {
             { id: 2, name: 'HTML' },
             { id: 3, name: 'CSS' },
             { id: 4, name: 'Python' }
-        ]
+        ],
+        className: 'max-w-sm'
     }
 }

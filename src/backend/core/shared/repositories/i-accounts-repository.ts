@@ -6,6 +6,7 @@ export interface IAccountsRepository {
         ghId: number,
         ghNodeId: string,
         ghUserName: string,
+        ghProfileUrl: string,
         ghProfileImg: string
     ): Promise<string>
     getOnboardingAccountIdByGHId(ghId: number): Promise<string | void>

@@ -20,12 +20,14 @@ export class AccountsRepository implements IAccountsRepository {
         ghId: number,
         ghNodeId: string,
         ghUserName: string,
+        ghProfileUrl: string,
         ghProfileImg: string
     ): Promise<string> {
         // Create a new account
         const account = await OnboardingUser.create({
             username: ghUserName,
             profileImg: ghProfileImg,
+            gitHubProfileUrl: ghProfileUrl,
             gitHubId: ghId,
             gitHubNodeId: ghNodeId
         })
@@ -114,6 +116,17 @@ export class AccountsRepository implements IAccountsRepository {
             where: { gitHubId: ghId }
         })
         return account?.id
+    }
+
+    async updateGitHubData(
+        ghId: number,
+        ghProfileUrl: string,
+        profileImg: string
+    ) {
+        await User.update(
+            { gitHubId: ghId, gitHubProfileUrl: ghProfileUrl, profileImg },
+            { where: { gitHubId: ghId } }
+        )
     }
 
     async checkAccountExistence(id: string): Promise<boolean> {

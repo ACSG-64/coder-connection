@@ -42,8 +42,15 @@ export default async function Profile() {
                         <div className="mb-3 mt-2">
                             <Paragraph>
                                 Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Quisque sit amet purus commodo,
-                                luctus erat nec, rhoncus lorem.
+                                adipiscing elit. Curabitur sagittis magna id
+                                tellus varius vulputate. Suspendisse cursus
+                                neque vitae libero pretium, nec facilisis orci
+                                volutpat. Vestibulum ante ipsum primis in
+                                faucibus orci luctus et ultrices posuere cubilia
+                                curae; Nulla ornare dui non sapien aliquet
+                                vestibulum. Etiam vel metus eget ligula congue
+                                dignissim vel vitae libero. Vestibulum et nibh
+                                eget augue rutrum pharetra nec in felis.
                             </Paragraph>
                         </div>
                     </div>

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "dev-turbo": "next dev --turbo",
+    "prebuild": "node prebuild.js",
     "build": "next build",
     "start": "next start",
     "sync-dev-db": "ts-node -r tsconfig-paths/register src/backend/configuration/sequelize/setup.ts --env=development",
@@ -77,6 +78,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^4.40.1",
     "@storybook/addon-a11y": "^7.3.2",
     "@storybook/addon-essentials": "^7.3.2",
     "@storybook/addon-interactions": "^7.3.2",

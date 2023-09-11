@@ -32,3 +32,12 @@ export const WithIcon: Story = {
         icon: FaGithub
     }
 }
+
+export const Loading: Story = {
+    args: {
+        variant: 'outline',
+        children: 'Button loading',
+        icon: FaGithub,
+        loading: true
+    }
+}

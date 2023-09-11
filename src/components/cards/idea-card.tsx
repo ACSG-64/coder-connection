@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import Tag from '../tag'
 import { AnchorButton } from '../ui/button'
 import {
@@ -10,7 +11,7 @@ import {
 } from '../ui/card'
 import { Separator } from '../ui/separator'
 
-export interface IdeaCardProps {
+export interface IdeaCardProps extends React.HTMLAttributes<HTMLDivElement> {
     title: string
     url: string
     summary?: string
@@ -22,10 +23,12 @@ export default function IdeaCard({
     title,
     summary,
     topics,
-    url
+    url,
+    className,
+    ...props
 }: IdeaCardProps) {
     return (
-        <Card className="flex flex-col">
+        <Card className={cn('flex flex-col', className)} {...props}>
             <CardHeader>
                 <CardTitle>{title}</CardTitle>
                 <CardDescription>{summary}</CardDescription>

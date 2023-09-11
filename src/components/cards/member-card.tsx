@@ -10,8 +10,9 @@ import {
 } from '../ui/card'
 import { Separator } from '../ui/separator'
 import { Large, Small } from '../ui/typography'
+import { cn } from '@/lib/utils'
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
     name: string
     surname: string
     username: string
@@ -33,10 +34,12 @@ export default function MemberCard({
     name,
     surname,
     username,
-    affinityScore
+    affinityScore,
+    className,
+    ...props
 }: Props) {
     return (
-        <Card>
+        <Card className={cn(className)} {...props}>
             <CardHeader>
                 <div className="flex items-center justify-between">
                     <div className="grow">
@@ -44,9 +47,6 @@ export default function MemberCard({
                             {name} {surname}
                         </CardTitle>
                         <CardDescription className="mt-1.5 flex flex-wrap items-center gap-1">
-                            {/* <span className="inline-block text-lg">
-                                <FaGithub />
-                            </span> */}
                             {username}
                         </CardDescription>
                     </div>

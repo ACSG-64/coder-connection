@@ -1,64 +1,37 @@
+import './main-page.css'
+
 /* eslint-disable @next/next/no-img-element */
-import { H1, H2, H3, Large, Paragraph } from '@/components/ui/typography'
-import Image from 'next/image'
+import { Large, Paragraph } from '@/components/ui/typography'
 
 import { Button } from '@/components/ui/button'
 import {
     Card,
-    CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle
 } from '@/components/ui/card'
+import { getDictionary } from './lang/dictionary'
+import { getServerLang } from '@/hooks/use-server-lang'
 
-interface FeatureDescriptorProps {
-    children: React.ReactNode
-    img: { src: string; alt: string }
-    imgLeft?: boolean
-}
-
-function FeatureDescriptor({
-    children,
-    img,
-    imgLeft = true
-}: FeatureDescriptorProps) {
-    return (
-        <div className="py-16">
-            <div className="feature-grid mx-auto max-w-screen-xl">
-                <img
-                    src={img.src}
-                    alt={img.alt}
-                    style={{ gridArea: imgLeft ? 'left-img' : 'right-img' }}
-                />
-                <div style={{ gridArea: 'content' }}>{children}</div>
-            </div>
-        </div>
-    )
-}
-
-export default function Home() {
+export default async function Home() {
+    const lang = getServerLang()
+    const dict = await getDictionary(lang)
     return (
         <>
             <main className="grid-background">
                 <div className="mx-auto flex min-h-[92vh] max-w-screen-xl flex-col items-center justify-center gap-5">
                     <header>
-                        <Paragraph className="text-2xl">
-                            A place where tech enthusiast can
+                        <Paragraph className="text-center text-2xl">
+                            {dict['small-motto']}
                         </Paragraph>
-                        <Paragraph className="text-[4.2rem] font-black leading-none [&:not(:first-child)]:mt-0">
+                        <Paragraph className="text-center text-[4.2rem] font-black leading-none [&:not(:first-child)]:mt-0">
                             <span className="text-gradient">
-                                Work in projects collaboratively
+                                {dict['big-motto']}
                             </span>
                         </Paragraph>
                     </header>
                     <Large className="text-center font-normal">
-                        Whether you are early in your career or are an
-                        experienced developer, CoderConnection is the ideal
-                        place to meet other developers and create meaningful
-                        projects together. Here you can develop with others,
-                        lead teams, share knowledge, learn by doing, etc.,
-                        CoderConnections is here to help you grow your career
+                        {dict.summary}
                     </Large>
                     <div className="flex gap-8">
                         <Button size={'lg'}>

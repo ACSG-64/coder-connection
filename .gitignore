@@ -40,3 +40,7 @@ next-env.d.ts
 
 #storybook
 build-storybook.log
+
+#editors
+.idea
+.vscode

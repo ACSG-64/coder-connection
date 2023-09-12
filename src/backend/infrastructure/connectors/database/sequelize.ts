@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv'
 import args from '@/utils/args'
 import { Sequelize } from 'sequelize-typescript'
 import * as Models from '@/backend//infrastructure/sequelize/models'
+import pg from 'pg'
 
 /* @ts-ignore */
 const env = args.env ?? process.env.ENV
@@ -19,8 +20,10 @@ function getSequelizeInstance() {
             dotenv.config()
             /* @ts-ignore */
             return new Sequelize(process.env.PRODUCTION_DB_CONNECTION, {
+                dialectModule: pg,
                 dialect: 'postgres',
-                timezone: '00:00'
+                timezone: '00:00',
+                pool: { max: 5, min: 0, idle: 10000 }
             })
     }
 }
@@ -36,9 +39,21 @@ function getSequelize() {
     return sequelize
 }
 
+class SequelizeInstance {
+    private static sequelize?: Sequelize
+    static get() {
+        return this.sequelize ?? this.setSequelize()
+    }
+
+    static setSequelize() {
+        this.sequelize = getSequelize()
+        return this.sequelize
+    }
+}
+
 let sequelize: Sequelize
 if (process.env.NODE_ENV === 'production') {
-    sequelize = getSequelize()
+    sequelize = SequelizeInstance.get()
 } else {
     /* @ts-ignore */
     if (!global.sequelize) {

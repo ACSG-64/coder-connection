@@ -18,7 +18,7 @@ interface ProjectIdeasListPageProps {
 }
 
 export default function ProjectIdeasListPage({
-    authVersion = false
+    authVersion
 }: ProjectIdeasListPageProps) {
     return (
         <>
@@ -45,7 +45,11 @@ export default function ProjectIdeasListPage({
     )
 }
 
-async function ProjectIdeasList({ authVersion }: { authVersion: boolean }) {
+async function ProjectIdeasList({
+    authVersion = false
+}: {
+    authVersion: boolean
+}) {
     const container = await getDIContainer()
     const retrieveProjectsUseCase = container.get<RetrieveProjectsUseCase>(
         TYPES.RetrieveProjectsUseCase

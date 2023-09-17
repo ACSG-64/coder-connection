@@ -1,8 +1,11 @@
-import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
+import { ThemeProvider } from '@/components/theme-provider'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Script from 'next/script'
+import { Toaster } from '@/components/ui/toaster'
+import { Footer } from '@/components/footer'
+import { cn } from '@/lib/utils'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,13 +36,15 @@ export default function RootLayout({
                     />
                 )}
             </head>
-            <body className={inter.className}>
+            <body className={cn(inter.className, 'w-screen overflow-x-hidden')}>
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
                     enableSystem
                 >
                     {children}
+                    <Footer />
+                    <Toaster />
                 </ThemeProvider>
             </body>
         </html>

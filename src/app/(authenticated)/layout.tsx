@@ -1,8 +1,6 @@
 import '../globals.css'
 import type { Metadata } from 'next'
 import { LateralNav } from '../../components/navs/lateral-nav'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { getUser } from '@/backend/core/shared/get-user'
 
 export const metadata: Metadata = {
     title: 'Member - CoderConnection',
@@ -15,11 +13,9 @@ export default async function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <div className="flex h-screen w-screen">
-            <LateralNav />
-            <div className="h-screen flex-1 overflow-y-auto px-10 pt-8">
-                {children}
-            </div>
+        <div className="flex min-h-screen w-screen">
+            <LateralNav className="sticky left-0 top-0 h-screen" />
+            <div className="flex-1 overflow-y-auto px-10 py-8">{children}</div>
         </div>
     )
 }

@@ -11,6 +11,9 @@ import {
     EVENTS,
     ManageProjectIdeaUseCase
 } from '../use-cases/manage-project-idea-use-case'
+import { ConversationsCreateResponse } from '@slack/web-api'
+import { CustomError } from '@/constants/custom-error'
+import ErrorCodes from '@/constants/error-codes'
 
 @injectable()
 export class ProjectIdeasManagerController implements ManageProjectIdeaUseCase {
@@ -58,15 +61,32 @@ export class ProjectIdeasManagerController implements ManageProjectIdeaUseCase {
         ) {
             return
         }
-        // Create the Slack channel
+        /* Channel creation */
+        let channelRes: ConversationsCreateResponse
+        // Format the name for the Slack channel
         const CHANNEL_NAME = `pj-${idea.title}-${idea.ghId}`
             .toLowerCase()
             .replace(' ', '-')
-        const channelRes = await SlackApp.instance.conversations.create({
-            name: CHANNEL_NAME
-        })
-        if (!channelRes.channel || !channelRes.channel.id) return
-        // Create the project idea
+
+        // Create the channel
+        try {
+            channelRes = await SlackApp.instance.conversations.create({
+                name: CHANNEL_NAME
+            })
+            if (!channelRes.channel || !channelRes.channel.id) {
+                throw new CustomError(
+                    ErrorCodes.CHANNEL_CREATION_ERROR,
+                    'The associated Slack channel could not be created'
+                )
+            }
+        } catch (e) {
+            throw new CustomError(
+                ErrorCodes.CHANNEL_CREATION_ERROR,
+                'The associated Slack channel could not be created'
+            )
+        }
+
+        /* Project idea creation */
         const topics = await new TopicsDAO().getByNames(idea.topics)
         const project = new ProjectIdeaDetails(
             ghId,
@@ -117,7 +137,10 @@ export class ProjectIdeasManagerController implements ManageProjectIdeaUseCase {
         await this.projectIdeasRepo.unhide(idea.ghId)
         // Unarchive the associated Slack channel
         if (!slackId) return
-        SlackApp.instance.conversations.unarchive({ channel: slackId })
+        SlackApp.instance.chat.postMessage({
+            channel: slackId,
+            blocks: getIdeaPrivatizedMessage()
+        })
     }
 
     private async makeHidden(idea: ProjectIdeaGH) {
@@ -125,10 +148,79 @@ export class ProjectIdeasManagerController implements ManageProjectIdeaUseCase {
         await this.projectIdeasRepo.hide(idea.ghId)
         // Archive the associated Slack channel
         if (!slackId) return
-        SlackApp.instance.conversations.archive({ channel: slackId })
+        SlackApp.instance.chat.postMessage({
+            channel: slackId,
+            blocks: getIdeaPublicizedMessage()
+        })
     }
 
     private formatName(name: string) {
         return name.replaceAll('-', ' ').replaceAll(/\s+/g, ' ')
     }
+}
+
+function getIdeaPrivatizedMessage() {
+    return [
+        {
+            type: 'header',
+            text: {
+                type: 'plain_text',
+                text: 'Update notification'
+            }
+        },
+        {
+            type: 'section',
+            text: {
+                type: 'mrkdwn',
+                text:
+                    '<!channel> The project associated with this channel was make hidden, until this idea ' +
+                    'becomes public again no new groups can work on this idea. \n'
+            }
+        },
+        {
+            type: 'divider'
+        },
+        {
+            type: 'context',
+            elements: [
+                {
+                    type: 'mrkdwn',
+                    text:
+                        '_This an automated message, contact administrators directly ' +
+                        'if you need more information._'
+                }
+            ]
+        }
+    ]
+}
+
+function getIdeaPublicizedMessage() {
+    return [
+        {
+            type: 'header',
+            text: {
+                type: 'plain_text',
+                text: 'Update notification'
+            }
+        },
+        {
+            type: 'section',
+            text: {
+                type: 'mrkdwn',
+                text: '<!channel> The project associated with this channel was made public again.'
+            }
+        },
+        {
+            type: 'divider'
+        },
+        {
+            type: 'context',
+            elements: [
+                {
+                    type: 'mrkdwn',
+                    text: '_This an automated message_'
+                }
+            ]
+        }
+    ]
 }

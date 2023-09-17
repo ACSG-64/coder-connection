@@ -19,7 +19,7 @@ import { Metadata } from 'next'
 import { signOut } from 'next-auth/react'
 import { useState } from 'react'
 import { FaSlack } from 'react-icons/fa6'
-import TimeZonesSelector from './time-zone-selector'
+import TimeZonesSelector from '../../components/time-zone-selector'
 
 export const metadata: Metadata = {
     title: 'Account setup',
@@ -42,7 +42,7 @@ export default function OnboardingUserForm({
         control: form.control
     })
 
-    const selectTimeZone = (timeZone: tag) => {
+    const selectTimeZoneHandler = (timeZone: tag) => {
         form.setValue('timeZone', timeZone)
         form.trigger('timeZone')
     }
@@ -121,7 +121,7 @@ export default function OnboardingUserForm({
                                 <FormLabel>Time zone:</FormLabel>
                                 <FormControl>
                                     <TimeZonesSelector
-                                        onSelect={selectTimeZone}
+                                        onSelect={selectTimeZoneHandler}
                                         value={field.value}
                                         timeZones={timeZones}
                                     />

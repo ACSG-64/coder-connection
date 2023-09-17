@@ -5,8 +5,9 @@ import { TYPES, getDIContainer } from './config/di-container'
 import { GetProjectsQuery } from '@/backend/core/services/project-ideas/models/get-projects-quety'
 import { RetrieveProjectsUseCase } from '@/backend/core/services/project-ideas/use-cases/retrieve-projects-use-case'
 import { Suspense } from 'react'
-import { Skeleton } from '@/components/ui/skeleton'
 import { Metadata } from 'next'
+import { LoadingCardsSkeleton } from '../../../components/skeletons/loading-cards-skeleton'
+import { CardsGridContainer } from '@/components/cards/cards-grid-container'
 
 export const metadata: Metadata = {
     title: 'Project ideas - CoderConnection',
@@ -18,30 +19,26 @@ interface ProjectIdeasListPageProps {
 }
 
 export default function ProjectIdeasListPage({
-    authVersion
+    authVersion = false
 }: ProjectIdeasListPageProps) {
     return (
-        <>
-            <div className="mb-8 flex items-center">
-                <H1 className="flex-1 lg:text-3xl">Project ideas</H1>
+        <main className="'mx-auto mt-5'">
+            <header className="mb-8 flex items-center">
+                <H1 className="flex-1 text-3xl lg:text-3xl">Project ideas</H1>
                 {authVersion && (
                     <AnchorButton href="/app/project-ideas/idea/new">
                         Propose a project
                     </AnchorButton>
                 )}
-            </div>
-
-            <div
-                className="mx-auto grid max-w-screen-xl auto-rows-auto grid-cols-3 gap-8"
-                style={{
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))'
-                }}
-            >
-                <Suspense fallback={<ProjectIdeasListSkeleton />}>
-                    <ProjectIdeasList authVersion />
-                </Suspense>
-            </div>
-        </>
+            </header>
+            <section>
+                <CardsGridContainer>
+                    <Suspense fallback={<LoadingCardsSkeleton />}>
+                        <ProjectIdeasList authVersion={authVersion} />
+                    </Suspense>
+                </CardsGridContainer>
+            </section>
+        </main>
     )
 }
 
@@ -76,10 +73,4 @@ async function ProjectIdeasList({
             })}
         </>
     )
-}
-
-function ProjectIdeasListSkeleton() {
-    const skeleton = <Skeleton className="h-52" />
-    const skeletons = new Array(15).fill(skeleton)
-    return <>{skeletons.map((s) => s)}</>
 }

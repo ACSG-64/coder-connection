@@ -22,7 +22,7 @@ import {
     TimeZone,
     UserCompetency,
     UserInterest,
-    UserProject,
+    ProjectContributors,
     WorkingGroup
 } from '..'
 
@@ -85,7 +85,7 @@ export class User extends Model {
     @HasMany(() => UserInterest)
     userInterests?: UserInterest[]
 
-    @BelongsToMany(() => Project, () => UserProject)
+    @BelongsToMany(() => Project, () => ProjectContributors)
     projects?: Project[]
 
     @HasMany(() => GroupApplication)

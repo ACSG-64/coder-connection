@@ -14,6 +14,7 @@ export class ProjectIdeaProposalsController
         @inject(TYPES.IProjectIdeaProposalsRepository)
         private readonly projectIdeaProposalsRepo: IProjectIdeaProposalsRepository
     ) {}
+
     async createProposal(proposalCmd: CreateProjectIdeaProposalCommand) {
         const { authorId, title, summary, content, features, topics } =
             proposalCmd

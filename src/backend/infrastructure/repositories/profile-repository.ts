@@ -1,20 +1,24 @@
 import orm from '@/backend/infrastructure/connectors/database/sequelize'
 import {
     Skill,
+    TimeZone,
     User,
     UserCompetency,
     UserInterest
 } from '@/backend/infrastructure/sequelize/models'
 import { Op } from 'sequelize'
-import { ProfileDetails } from '@/backend/core/services/profiles/models/profile-details'
+import { ProfileInternalAttributes } from '@/backend/core/services/profiles/models/profile-internal-attributes'
 import { IProfilesRepository } from '@/backend/core/services/profiles/repositories/i-profiles-repository'
 import { SkillDTO } from '@/backend/core/shared/dtos/skill-dto'
 import { injectable } from 'inversify'
+import { ProfileDetails } from '@/backend/core/services/profiles/models/profile-details'
+import { TimeZoneDTO } from '@/backend/core/shared/dtos/time-zone-dto'
+import { ProfileGitHubAttributes } from '@/backend/core/services/profiles/models/profile-github-attributes'
 
 @injectable()
 export class ProfileRepository implements IProfilesRepository {
     constructor() {
-        orm.addModels([User, UserCompetency, UserInterest, Skill])
+        orm.addModels([User, UserCompetency, UserInterest, Skill, TimeZone])
     }
 
     async get(userId: string) {
@@ -31,7 +35,8 @@ export class ProfileRepository implements IProfilesRepository {
                     include: [Skill],
                     attributes: ['skillId'],
                     order: [[Skill, 'name', 'ASC']]
-                }
+                },
+                { model: TimeZone, attributes: ['id', 'tzIdentifier'] }
             ]
         })
         if (!user) return null
@@ -39,10 +44,15 @@ export class ProfileRepository implements IProfilesRepository {
         const {
             name,
             surname,
+            username,
             description,
             linkedInProfileUrl,
+            gitHubProfileUrl,
+            slackId,
             userCompetencies,
-            userInterests
+            userInterests,
+            profileImg,
+            timeZone: userTZ
         } = user
 
         const competencies = userCompetencies?.map(
@@ -63,22 +73,38 @@ export class ProfileRepository implements IProfilesRepository {
                 }
             }) => new SkillDTO(id, name)
         )
+        const timeZone = new TimeZoneDTO(userTZ.id, userTZ.tzIdentifier)
 
-        return new ProfileDetails(
+        return new ProfileDetails({
             name,
             surname,
+            username,
             description,
-            linkedInProfileUrl ?? '',
-            competencies,
-            interests
-        )
+            linkedInUrl: linkedInProfileUrl ?? '',
+            competencies: competencies ?? [],
+            interests: interests ?? [],
+            gitHubProfileUrl,
+            profileImg,
+            timeZone,
+            slackId
+        })
     }
 
-    async update(userId: string, details: ProfileDetails) {
+    async getByUsername(username: string) {
+        const userId = await User.findOne({
+            where: { username },
+            attributes: ['id']
+        })
+        if (!userId) return null
+        return this.get(userId.id)
+    }
+
+    async update(userId: string, details: ProfileInternalAttributes) {
         const {
             name,
             surname,
             description,
+            timeZone,
             linkedInUrl: linkedInProfileUrl,
             competencies,
             interests
@@ -136,14 +162,18 @@ export class ProfileRepository implements IProfilesRepository {
             (id) => !sharedInterestsSet.has(id)
         )
 
-        console.log('IS EMPTY???????????', competenciesToDelete)
-
         /* Update data */
         await orm.transaction(async (t) => {
             const [user] = await Promise.all([
                 // User
                 User.update(
-                    { name, surname, description, linkedInProfileUrl },
+                    {
+                        name,
+                        surname,
+                        description,
+                        linkedInProfileUrl,
+                        timeZoneId: timeZone.id
+                    },
                     { where: { id: userId }, transaction: t }
                 ),
                 // Competencies
@@ -174,5 +204,15 @@ export class ProfileRepository implements IProfilesRepository {
 
             return user
         })
+    }
+
+    async updateGitHubDetails(
+        id: string,
+        { username, profileUrl, profileImg }: ProfileGitHubAttributes
+    ) {
+        await User.update(
+            { username, profileImg, gitHubProfileUrl: profileUrl },
+            { where: { id } }
+        )
     }
 }

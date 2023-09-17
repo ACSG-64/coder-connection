@@ -22,8 +22,7 @@ function getSequelizeInstance() {
             return new Sequelize(process.env.PRODUCTION_DB_CONNECTION, {
                 dialectModule: pg,
                 dialect: 'postgres',
-                timezone: '00:00',
-                pool: { max: 5, min: 0, idle: 10000 }
+                timezone: '00:00'
             })
     }
 }

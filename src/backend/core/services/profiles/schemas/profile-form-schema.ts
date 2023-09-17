@@ -15,6 +15,12 @@ export const profileFormSchema = z.object({
     name: z.string().trim().min(2).max(25),
     surname: z.string().trim().min(2).max(25),
     description: z.string().trim().min(0).max(500),
+    timeZone: z
+        .object({
+            id: z.number().int().nonnegative(),
+            name: z.string().trim().min(5)
+        })
+        .required(),
     linkedInUrl: z
         .union([
             z

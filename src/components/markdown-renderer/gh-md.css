@@ -3,6 +3,12 @@ Adapted from https://raw.githubusercontent.com/sindresorhus/github-markdown-css/
 Licensed under MIT License
 */
 
+.markdown-body {
+    --color-border-muted: hsla(210, 18%, 87%, 1);
+    --color-neutral-muted: rgba(175, 184, 193, 0.2);
+    --color-border-default: #d0d7de;
+}
+
 [data-theme='light'] .markdown-body {
     color-scheme: light;
     --color-prettylights-syntax-comment: #6e7781;

@@ -6,7 +6,7 @@ import { GroupMatchingApplication } from './group-matching-application'
 export class GroupMatchingSkill extends Model {
     @ForeignKey(() => GroupMatchingApplication)
     @Column
-    groupMatchingApplicationId!: number
+    applicationId!: number
 
     @ForeignKey(() => Skill)
     @Column

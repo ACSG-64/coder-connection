@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import Tag from '../tag'
+import Tag from '../tags/tag'
 import { AnchorButton } from '../ui/button'
 import {
     Card,

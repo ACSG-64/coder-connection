@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
         body.name,
         body.surname,
         body.description,
+        body.timeZone,
         body?.linkedInUrl,
         rawCompetencies.map(({ id, name }) => new SkillDTO(id, name)),
         rawInterests.map(({ id, name }) => new SkillDTO(id, name))

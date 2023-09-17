@@ -69,6 +69,9 @@ const options: NextAuthOptions = {
                 session.user.id = token.id
             }
             return session
+        },
+        async redirect(_) {
+            return '/app'
         }
     }
 }

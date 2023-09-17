@@ -10,9 +10,9 @@ import {
     DialogTrigger
 } from '@/components/ui/dialog'
 import { Small } from '@/components/ui/typography'
-import { FiUserPlus } from 'react-icons/fi'
 import { getDictionary } from '../lang/dictionary'
 import { getServerLang } from '@/hooks/use-server-lang'
+import { EditProfileButton } from './edit-profile-button'
 
 export async function SettingsDialog({
     children
@@ -39,14 +39,9 @@ export async function SettingsDialog({
                     </div>
                     <div className="flex items-center justify-between">
                         <Small>{dict.profile}</Small>
-                        <AnchorButton
-                            href="/app/account/settings/profile"
-                            icon={FiUserPlus}
-                            variant={'outline'}
-                            size={'sm'}
-                        >
+                        <EditProfileButton>
                             {dict['edit-profile']}
-                        </AnchorButton>
+                        </EditProfileButton>
                     </div>
                     <div className="flex items-center justify-between">
                         <Small>{dict.language}</Small>

@@ -1,8 +1,8 @@
 'use client'
 
 import { FiX } from 'react-icons/fi'
-import { Button } from './ui/button'
-import { Small } from './ui/typography'
+import { Button } from '../ui/button'
+import { Small } from '../ui/typography'
 
 const colorsArr = [
     { text: '#027A48', background: '#ECFDF3' },

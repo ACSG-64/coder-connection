@@ -1,11 +1,15 @@
 import Link from 'next/link'
-import LanguageSelector from './language-selector'
-import { Label } from './ui/label'
-import { Small } from './ui/typography'
-import { Separator } from './ui/separator'
 import { FaGithub } from 'react-icons/fa6'
+import { Separator } from '../ui/separator'
+import { Small } from '../ui/typography'
+import { Label } from '../ui/label'
+import LanguageSelector from '../language-selector'
+import { getServerLang } from '@/hooks/use-server-lang'
+import { getDictionary } from './lang/dictionary'
 
-export function Footer() {
+export async function Footer() {
+    const lang = getServerLang()
+    const dict = await getDictionary(lang)
     return (
         <footer>
             <Separator />
@@ -18,13 +22,13 @@ export function Footer() {
                             rel="noopener noreferrer"
                             className="flex gap-1"
                         >
-                            Support the project on GitHub
+                            {dict['github-support']}
                             <FaGithub />
                         </Link>
                     </Small>
                 </div>
                 <div className="flex flex-wrap items-center gap-1">
-                    <Label>Select your language:</Label>
+                    <Label>{dict['select-language']}:</Label>
                     <LanguageSelector />
                 </div>
             </div>

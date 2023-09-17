@@ -5,12 +5,18 @@ import {
     Default,
     HasMany,
     Model,
-    PrimaryKey,
     Table,
     Unique,
     UpdatedAt
 } from 'sequelize-typescript'
-import { Project, Topic, TopicProject } from '..'
+import {
+    GroupMatchingApplication,
+    GroupMatchingProjectIdea,
+    Project,
+    Topic,
+    TopicProject
+} from '..'
+
 @Table
 export class ProjectIdea extends Model {
     @Unique
@@ -38,9 +44,18 @@ export class ProjectIdea extends Model {
     @BelongsToMany(() => Topic, () => TopicProject)
     topics!: Topic[]
 
+    @BelongsToMany(
+        () => GroupMatchingApplication,
+        () => GroupMatchingProjectIdea
+    )
+    groupMatchingApplications!: GroupMatchingApplication[]
+
     @Default(true)
     @Column
     isPublic!: boolean
+
+    @HasMany(() => Project)
+    projects!: Project[]
 
     @CreatedAt
     createdAt!: Date

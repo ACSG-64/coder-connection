@@ -1,4 +1,5 @@
 import {
+    AllowNull,
     BelongsTo,
     BelongsToMany,
     Column,
@@ -8,69 +9,75 @@ import {
     ForeignKey,
     HasMany,
     Model,
-    PrimaryKey,
     Table,
     Unique,
     UpdatedAt
 } from 'sequelize-typescript'
-import { ProjectIdea, User, UserProject, WorkingGroup } from '..'
+import { ProjectIdea, User, ProjectContributors, WorkingGroup } from '..'
+import { ProjectParent } from './project-parent'
 
 @Table
 export class Project extends Model {
     @Column(DataType.STRING(100))
     name!: string
 
+    @Default('')
     @Column(DataType.STRING(350))
     summary!: string
 
+    @AllowNull
     @Unique
     @Column(DataType.STRING(30))
     video?: string
 
     @Unique
     @Column
-    repoUrl!: string
+    gitHubId!: number
 
+    @Unique
+    @Column
+    gitHubNodeId!: string
+
+    @Unique
+    @Column
+    gitHubRepositoryUrl!: string
+
+    @AllowNull
     @Column
     repoOpenGraphImg!: string
-
-    @Column
-    latestCommitSHA!: string
-
-    @Default(false)
-    @Column
-    isPublic!: boolean
 
     @Default(false)
     @Column
     isDerivate!: boolean
 
+    @Default(false)
+    @Column
+    isPublic!: boolean
+
     /* Contributor - Project association */
-    @BelongsToMany(() => User, () => UserProject)
+    @BelongsToMany(() => User, () => ProjectContributors)
     contributors!: User[]
 
     /* Working group - project association */
-    @BelongsTo(() => WorkingGroup)
+    @BelongsTo(() => WorkingGroup, { onDelete: 'CASCADE' })
     workingGroup!: any
     @ForeignKey(() => WorkingGroup)
     @Column
     workingGroupId!: number
 
     /* Project idea - project association */
-    @BelongsTo(() => ProjectIdea)
+    @BelongsTo(() => ProjectIdea, { onDelete: 'CASCADE' })
     projectIdea!: any
     @ForeignKey(() => ProjectIdea)
     @Column
     projectIdeaId!: number
 
     /* Project derivation association */
-    @BelongsTo(() => Project)
-    baseProject?: Project
-    @HasMany(() => Project)
-    derivations?: Project[]
-    @ForeignKey(() => Project)
-    @Column
-    baseProjectId?: number
+    @HasMany(() => ProjectParent, 'parentProjectId')
+    derivatives!: Project[]
+
+    @HasMany(() => ProjectParent, 'projectId')
+    parentOf!: Project[]
 
     @Column
     postedAt?: Date

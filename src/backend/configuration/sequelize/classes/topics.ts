@@ -1,0 +1,41 @@
+const TOPICS = Array.from(
+    new Set([
+        'web-development',
+        'mobile-app-development',
+        'front-end-development',
+        'back-end-development',
+        'full-stack-development',
+        'devops',
+        'cloud-computing',
+        'machine-learning',
+        'data-science',
+        'artificial-intelligence',
+        'natural-language-processing',
+        'computer-vision',
+        'data-analytics',
+        'database-administration',
+        'big-data',
+        'blockchain-development',
+        'cybersecurity',
+        'game-development',
+        'embedded-systems',
+        'iot-development',
+        'ar-vr-development',
+        'quality-assurance-and-testing',
+        'software-architecture',
+        'ui-ux-design',
+        'data-engineering',
+        'quantum-computing',
+        'robotics',
+        'bioinformatics',
+        'geospatial-analysis',
+        'bioengineering',
+        'autonomous-vehicles',
+        'information-security',
+        'network-administration',
+        'system-administration',
+        'parallel-computing'
+    ])
+).sort()
+
+export default TOPICS

@@ -12,7 +12,7 @@ import {
 import { WorkingGroup } from '..'
 
 @Table
-export class Invitation extends Model {
+export class GroupInvitation extends Model {
     @IsUUID(4)
     @Unique
     @Column({ defaultValue: DataType.UUIDV4 })

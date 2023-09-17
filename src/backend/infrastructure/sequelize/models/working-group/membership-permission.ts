@@ -1,13 +1,13 @@
 import { Column, ForeignKey, Model, Table } from 'sequelize-typescript'
-import { GroupMembership, Permission, TalentPost } from '.'
+import { GroupMembership, GroupPermission, TalentPost } from '.'
 
-@Table
+@Table({ timestamps: false })
 export class MembershipPermission extends Model {
     @ForeignKey(() => GroupMembership)
     @Column
     membershipId!: number
 
-    @ForeignKey(() => Permission)
+    @ForeignKey(() => GroupPermission)
     @Column
-    roleId!: number
+    permissionId!: number
 }

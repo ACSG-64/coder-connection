@@ -1,4 +1,5 @@
 import {
+    AutoIncrement,
     BelongsToMany,
     Column,
     DataType,
@@ -18,8 +19,13 @@ import {
 
 @Table({ timestamps: false })
 export class Skill extends Model {
+    @PrimaryKey
+    @AutoIncrement
+    @Column(DataType.INTEGER)
+    id!: number
+
     @Unique
-    @Column(DataType.STRING(12))
+    @Column(DataType.STRING(50))
     name!: string
 
     @BelongsToMany(() => User, () => UserCompetency)

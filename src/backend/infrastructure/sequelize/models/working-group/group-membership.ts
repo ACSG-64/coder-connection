@@ -5,33 +5,29 @@ import {
     Column,
     ForeignKey,
     Model,
-    PrimaryKey,
     Table
 } from 'sequelize-typescript'
-import { MembershipPermission, Permission, WorkingGroup } from '.'
+import { MembershipPermission, GroupPermission, WorkingGroup } from '.'
 import { User } from '..'
 
 @Table
 export class GroupMembership extends Model {
-    @PrimaryKey
     @AutoIncrement
-    @Column
+    @Column({ primaryKey: true })
     id!: number
 
+    @BelongsTo(() => User)
+    member!: User
     @ForeignKey(() => User)
     @Column
     memberId!: string
 
+    @BelongsTo(() => WorkingGroup)
+    workingGroup!: any
     @ForeignKey(() => WorkingGroup)
     @Column
     workingGroupId!: number
 
-    @BelongsTo(() => User)
-    member!: User
-
-    @BelongsTo(() => WorkingGroup)
-    workingGroup!: any
-
-    @BelongsToMany(() => Permission, () => MembershipPermission)
-    permissions!: Permission[]
+    @BelongsToMany(() => GroupPermission, () => MembershipPermission)
+    permissions!: GroupPermission[]
 }

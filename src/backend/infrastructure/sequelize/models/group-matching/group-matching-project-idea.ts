@@ -6,7 +6,7 @@ import { ProjectIdea } from '..'
 export class GroupMatchingProjectIdea extends Model {
     @ForeignKey(() => GroupMatchingApplication)
     @Column
-    groupMatchingApplicationId!: number
+    applicationId!: number
 
     @ForeignKey(() => ProjectIdea)
     @Column

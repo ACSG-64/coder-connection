@@ -3,12 +3,12 @@ import { Project } from '.'
 import { User } from '..'
 
 @Table
-export class UserProject extends Model {
+export class ProjectContributors extends Model {
     @ForeignKey(() => User)
     @Column
     userId!: string
 
     @ForeignKey(() => Project)
     @Column
-    project!: number
+    projectId!: number
 }

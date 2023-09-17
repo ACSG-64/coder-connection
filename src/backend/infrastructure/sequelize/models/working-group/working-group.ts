@@ -10,8 +10,8 @@ import {
     Unique
 } from 'sequelize-typescript'
 import { Project, TalentPost, User } from '..'
-import { Invitation } from './invitation'
-import { GroupMembership } from './membership'
+import { GroupInvitation } from './group-invitation'
+import { GroupMembership } from './group-membership'
 
 @Table
 export class WorkingGroup extends Model {
@@ -22,8 +22,11 @@ export class WorkingGroup extends Model {
     @Column(DataType.STRING(300))
     description!: string
 
-    @HasOne(() => Invitation)
-    invitation?: Invitation
+    @Column(DataType.STRING(22))
+    slackId!: string
+
+    @HasOne(() => GroupInvitation)
+    invitation!: GroupInvitation
 
     @HasOne(() => Project)
     project!: Project

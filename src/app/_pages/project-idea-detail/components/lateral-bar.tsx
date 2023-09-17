@@ -12,26 +12,24 @@ import { CreateGroupModal } from './create-group-modal'
 
 export function LateralBar() {
     return (
-        <>
-            <Card>
-                <CardHeader>
-                    <CardTitle>Access to enable more options</CardTitle>
-                    <CardDescription>
-                        Access to start working on this project
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <AnchorButton
-                        icon={FiLogIn}
-                        className="w-full"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Access now
-                    </AnchorButton>
-                </CardContent>
-            </Card>
-        </>
+        <Card>
+            <CardHeader>
+                <CardTitle>Access to enable more options</CardTitle>
+                <CardDescription>
+                    Access to start working on this project
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <AnchorButton
+                    icon={FiLogIn}
+                    className="w-full"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Access now
+                </AnchorButton>
+            </CardContent>
+        </Card>
     )
 }
 
@@ -67,14 +65,6 @@ export function AuthLateralBar({ slackUrl, ideaId }: AuthLateralBarProps) {
             <CreateGroupModal ideaId={ideaId} />
             <AnchorButton variant={'secondary'} size={'lg'}>
                 <span className="flex-1">Project showcases</span>
-                <span className="text-xl font-black">
-                    <FiArrowRight />
-                </span>
-            </AnchorButton>
-            <AnchorButton variant={'secondary'} size={'lg'}>
-                <span className="flex-1">
-                    Find groups looking for new members
-                </span>
                 <span className="text-xl font-black">
                     <FiArrowRight />
                 </span>

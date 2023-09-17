@@ -7,7 +7,6 @@ import { TabNav } from './components/tab-nav'
 
 interface Props {
     children: React.ReactNode
-    asdfghj: React.ReactNode
     params: { id: number }
 }
 
